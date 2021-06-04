@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PageHeader from '../page-header/page-header';
+import PageHeader from '../../page-header/page-header';
 
-function SignIn() {
+function SignInPage() {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -77,4 +77,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignInPage;

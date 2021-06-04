@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PageHeader from '../page-header/page-header';
+import PageHeader from '../../page-header/page-header';
 
-function Room() {
+function RoomPage() {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -500,4 +500,4 @@ function Room() {
   );
 }
 
-export default Room;
+export default RoomPage;

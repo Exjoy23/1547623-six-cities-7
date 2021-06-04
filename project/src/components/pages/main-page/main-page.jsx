@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PageHeader from '../page-header/page-header';
-import CardList from '../card-list/card-list';
+import PageHeader from '../../page-header/page-header';
+import CardList from '../../card-list/card-list';
 
-function Home({ offersCount }) {
+function MainPage({ offersCount }) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -114,8 +114,8 @@ function Home({ offersCount }) {
   );
 }
 
-Home.propTypes = {
+MainPage.propTypes = {
   offersCount: PropTypes.number.isRequired,
 };
 
-export default Home;
+export default MainPage;

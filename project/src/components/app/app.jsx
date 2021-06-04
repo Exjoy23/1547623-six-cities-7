@@ -4,23 +4,23 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
 
-import Main from '../main/main';
-import SignIn from '../sign-in/sign-in';
-import Favorites from '../favorites/favorites';
-import Room from '../room/room';
-import NotFound from '../not-found/not-found';
+import MainPage from '../pages/main-page/main-page';
+import SignInPage from '../pages/sign-in-page/sign-in-page';
+import FavoritesPage from '../pages/favorites-page/favorites-page';
+import RoomPage from '../pages/room-page/room-page';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App({ offersCount }) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <Main offersCount={offersCount} />
+          <MainPage offersCount={offersCount} />
         </Route>
-        <Route exact path={AppRoute.SIGN_IN} component={SignIn} />
-        <Route exact path={AppRoute.FAVORITES} component={Favorites} />
-        <Route exact path={AppRoute.ROOM} component={Room} />
-        <Route component={NotFound} />
+        <Route exact path={AppRoute.SIGN_IN} component={SignInPage} />
+        <Route exact path={AppRoute.FAVORITES} component={FavoritesPage} />
+        <Route exact path={AppRoute.ROOM} component={RoomPage} />
+        <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );

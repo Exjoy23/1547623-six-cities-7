@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PageHeader from '../page-header/page-header';
+import PageHeader from '../../page-header/page-header';
 
-function Favorites() {
+function FavoritesPage() {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -223,4 +223,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default FavoritesPage;
