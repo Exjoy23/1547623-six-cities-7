@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CardItem from '../card-item/card-item';
 
-function CardList({ offersCount }) {
+import offersProp from '../app/offers.prop';
+
+function CardList({ offers }) {
+  const [activeCard, setActiveCard] = useState(null);
+
+
   return (
     <div className="cities__places-list places__list tabs__content">
-      {Array(offersCount)
-        .fill(null)
-        .map((item) => (
-          <CardItem key={item} />
-        ))}
+      <div style={{display: 'none'}}>{activeCard}</div>
+      {offers.map((item) => (
+        <CardItem key={item.id} offer={item} setActiveCard={setActiveCard} />
+      ))}
     </div>
   );
 }
 
 CardList.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default CardList;

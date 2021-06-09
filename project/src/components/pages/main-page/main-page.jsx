@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import PageHeader from '../../page-header/page-header';
 import CardList from '../../card-list/card-list';
 
-function MainPage({ offersCount }) {
+import offersProp from '../../app/offers.prop';
+
+function MainPage({ offers }) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -101,7 +103,7 @@ function MainPage({ offersCount }) {
                     </li>
                   </ul>
                 </form>
-                <CardList offersCount={offersCount} />
+                <CardList offers={offers} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -115,7 +117,7 @@ function MainPage({ offersCount }) {
 }
 
 MainPage.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
 export default MainPage;
