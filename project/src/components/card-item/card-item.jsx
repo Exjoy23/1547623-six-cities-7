@@ -89,7 +89,7 @@ function CardItem({
 CardItem.propTypes = {
   offer: offersProp,
   setActiveCard: PropTypes.func,
-  itemType: PropTypes.string.isRequired,
+  itemType: PropTypes.string,
 };
 
 export default CardItem;
