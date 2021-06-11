@@ -5,6 +5,8 @@ import CardItem from '../card-item/card-item';
 
 import offersProp from '../app/offers.prop';
 
+const FAVORITES_TYPE = 'FAVORITES';
+
 function FavoritesItem({ favoritesOffers, favoritesCity }) {
   const offers = favoritesOffers.filter(
     (item) => item.city.name === favoritesCity,
@@ -21,7 +23,12 @@ function FavoritesItem({ favoritesOffers, favoritesCity }) {
       </div>
       <div className="favorites__places">
         {offers.map((item) => (
-          <CardItem key={item.id} offer={item} isFavoritesScreen />
+          <CardItem
+            key={item.id}
+            offer={item}
+            isFavoritesScreen
+            itemType={FAVORITES_TYPE}
+          />
         ))}
       </div>
     </li>

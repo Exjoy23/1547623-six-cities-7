@@ -7,6 +7,8 @@ import { getRatingInPercent } from '../../../utils';
 import PageHeader from '../../page-header/page-header';
 import ReviewList from '../../review-list/review-list';
 import ReviewForm from '../../review-form/review-form';
+import ImageList from '../../image-list/image-list';
+import GoodsList from '../../goods-list/goods-list';
 
 import offersProp from '../../app/offers.prop';
 import reviewsProp from '../../app/reviews.prop';
@@ -64,15 +66,7 @@ function RoomPage({ offers, reviews }) {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {images.map((item) => (
-                  <div key={item} className="property__image-wrapper">
-                    <img
-                      className="property__image"
-                      src={item}
-                      alt="Photo studio"
-                    />
-                  </div>
-                ))}
+                <ImageList images={images} />
               </div>
             </div>
             <div className="property__container container">
@@ -129,11 +123,7 @@ function RoomPage({ offers, reviews }) {
                 <div className="property__inside">
                   <h2 className="property__inside-title">What&apos;s inside</h2>
                   <ul className="property__inside-list">
-                    {goods.map((item) => (
-                      <li key={item} className="property__inside-item">
-                        {item}
-                      </li>
-                    ))}
+                    <GoodsList goods={goods} />
                   </ul>
                 </div>
                 <div className="property__host">

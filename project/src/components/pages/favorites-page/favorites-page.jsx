@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PageHeader from '../../page-header/page-header';
-import FavoritesItem from '../../favorites-item/favorites-item';
+import FavoritesList from '../../favorites-list/favorites-list';
 
 import offersProp from '../../app/offers.prop';
 
@@ -46,13 +46,10 @@ function FavoritesPage({ offers }) {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                {favoritesCities.map((item) => (
-                  <FavoritesItem
-                    key={item}
-                    favoritesOffers={favoritesOffers}
-                    favoritesCity={item}
-                  />
-                ))}
+                <FavoritesList
+                  favoritesCities={favoritesCities}
+                  favoritesOffers={favoritesOffers}
+                />
               </ul>
             </section>
           </div>

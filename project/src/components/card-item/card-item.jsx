@@ -2,10 +2,12 @@ import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { AppRoute } from '../../const';
+import { AppRoute, CardType } from '../../const';
 import { getRatingInPercent } from '../../utils';
 
 import offersProp from '../app/offers.prop';
+
+const MAIN_TYPE = 'MAIN';
 
 function CardItem({
   offer: {
@@ -19,17 +21,13 @@ function CardItem({
     previewImage,
   },
   setActiveCard = () => {},
-  isFavoritesScreen,
+  itemType = MAIN_TYPE,
 }) {
   const cardRating = getRatingInPercent(rating);
 
   return (
     <article
-      className={
-        isFavoritesScreen
-          ? 'favorites__card place-card'
-          : 'cities__place-card place-card'
-      }
+      className={CardType[itemType].PLACE_CARD}
       onMouseEnter={() => setActiveCard(id)}
     >
       {isPremium && (
@@ -37,30 +35,18 @@ function CardItem({
           <span>Premium</span>
         </div>
       )}
-      <div
-        className={
-          isFavoritesScreen
-            ? 'favorites__image-wrapper place-card__image-wrapper'
-            : 'cities__image-wrapper place-card__image-wrapper'
-        }
-      >
+      <div className={CardType[itemType].IMAGE_WRAPPER}>
         <Link to={{ pathname: generatePath(AppRoute.ROOM, { id }), state: id }}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={isFavoritesScreen ? '150' : '260'}
-            height={isFavoritesScreen ? '110' : '200'}
-            alt="Place image"
+            width={CardType[itemType].IMAGE.WIDTH}
+            height={CardType[itemType].IMAGE.HEIGHT}
+            alt="Place"
           />
         </Link>
       </div>
-      <div
-        className={
-          isFavoritesScreen
-            ? 'favorites__card-info place-card__info'
-            : 'place-card__info'
-        }
-      >
+      <div className={CardType[itemType].CARD_INFO}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -103,7 +89,7 @@ function CardItem({
 CardItem.propTypes = {
   offer: offersProp,
   setActiveCard: PropTypes.func,
-  isFavoritesScreen: PropTypes.bool.isRequired,
+  itemType: PropTypes.string.isRequired,
 };
 
 export default CardItem;
