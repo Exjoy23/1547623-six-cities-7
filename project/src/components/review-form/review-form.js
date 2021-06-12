@@ -29,12 +29,7 @@ function ReviewForm() {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <div
-        className="reviews__rating-form form__rating"
-        onChange={handleFieldChange}
-      >
-        <RatingList />
-      </div>
+      <RatingList handleFieldChange={handleFieldChange} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"

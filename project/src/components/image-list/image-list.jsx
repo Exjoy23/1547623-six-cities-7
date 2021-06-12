@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function ImageList({ images }) {
-  return images.map((item) => (
-    <div key={item} className="property__image-wrapper">
-      <img className="property__image" src={item} alt="studio" />
+  return (
+    <div className="property__gallery">
+      {images.map((item) => (
+        <div key={item} className="property__image-wrapper">
+          <img className="property__image" src={item} alt="studio" />
+        </div>
+      ))}
     </div>
-  ));
+  );
 }
 
 ImageList.propTypes = {

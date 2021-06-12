@@ -45,12 +45,10 @@ function FavoritesPage({ offers }) {
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                <FavoritesList
-                  favoritesCities={favoritesCities}
-                  favoritesOffers={favoritesOffers}
-                />
-              </ul>
+              <FavoritesList
+                favoritesCities={favoritesCities}
+                favoritesOffers={favoritesOffers}
+              />
             </section>
           </div>
         </main>

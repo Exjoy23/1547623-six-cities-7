@@ -65,9 +65,7 @@ function RoomPage({ offers, reviews }) {
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
-              <div className="property__gallery">
-                <ImageList images={images} />
-              </div>
+              <ImageList images={images} />
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
@@ -122,9 +120,7 @@ function RoomPage({ offers, reviews }) {
                 </div>
                 <div className="property__inside">
                   <h2 className="property__inside-title">What&apos;s inside</h2>
-                  <ul className="property__inside-list">
-                    <GoodsList goods={goods} />
-                  </ul>
+                  <GoodsList goods={goods} />
                 </div>
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>

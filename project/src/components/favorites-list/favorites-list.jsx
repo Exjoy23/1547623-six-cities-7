@@ -7,7 +7,7 @@ import offersProp from '../app/offers.prop';
 
 function FavoritesList({ favoritesCities, favoritesOffers }) {
   return (
-    <>
+    <ul className="favorites__list">
       {favoritesCities.map((item) => (
         <FavoritesItem
           key={item}
@@ -15,7 +15,7 @@ function FavoritesList({ favoritesCities, favoritesOffers }) {
           favoritesCity={item}
         />
       ))}
-    </>
+    </ul>
   );
 }
 
