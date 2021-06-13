@@ -13,8 +13,7 @@ function PageHeader() {
               className="header__logo-link"
               to={AppRoute.MAIN}
               isActive={(match, { pathname }) =>
-                !match ? false : pathname === AppRoute.MAIN
-              }
+                match && pathname === AppRoute.MAIN}
               activeClassName="header__logo-link--active"
               activeStyle={{
                 cursor: 'default',
@@ -38,8 +37,7 @@ function PageHeader() {
                   className="header__nav-link header__nav-link--profile"
                   to={AppRoute.SIGN_IN}
                   isActive={(match, { pathname }) =>
-                    !match ? false : pathname === AppRoute.SIGN_IN
-                  }
+                    match && pathname === AppRoute.SIGN_IN}
                   activeStyle={{
                     cursor: 'default',
                     pointerEvents: 'none',
@@ -59,5 +57,3 @@ function PageHeader() {
 }
 
 export default PageHeader;
-
-// activeClassName="header__logo-link--active"
