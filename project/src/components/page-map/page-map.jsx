@@ -15,7 +15,7 @@ const icon = L.icon({
 });
 
 function PageMap({ offers }) {
-  const container = useRef();
+  const container = useRef(null);
 
   useEffect(() => {
     const map = L.map(container.current, {
