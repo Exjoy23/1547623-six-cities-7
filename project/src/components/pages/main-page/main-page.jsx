@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PageHeader from '../../page-header/page-header';
+import PageMap from '../../page-map/page-map';
 import CardList from '../../card-list/card-list';
 
 import offersProp from '../../app/offers.prop';
@@ -106,7 +107,12 @@ function MainPage({ offers }) {
                 <CardList offers={offers} />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section
+                  style={{ backgroundImage: 'none' }}
+                  className="cities__map map"
+                >
+                  <PageMap offers={offers} />
+                </section>
               </div>
             </div>
           </div>

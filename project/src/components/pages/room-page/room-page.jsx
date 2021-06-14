@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { getRatingInPercent } from '../../../utils';
 
 import PageHeader from '../../page-header/page-header';
+import PageMap from '../../page-map/page-map';
 import ReviewList from '../../review-list/review-list';
 import ReviewForm from '../../review-form/review-form';
 import ImageList from '../../image-list/image-list';
@@ -153,7 +154,9 @@ function RoomPage({ offers, reviews }) {
                 </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            <section className="property__map map">
+              <PageMap offers={offers} />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">

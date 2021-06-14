@@ -5,12 +5,9 @@ import RatingItem from '../rating-item/rating-item';
 
 const RATINGS = [5, 4, 3, 2, 1];
 
-function RatingList({ handleFieldChange }) {
+function RatingList({ handleChange }) {
   return (
-    <div
-      className="reviews__rating-form form__rating"
-      onChange={handleFieldChange}
-    >
+    <div className="reviews__rating-form form__rating" onChange={handleChange}>
       {RATINGS.map((item) => (
         <RatingItem key={item} rating={item} />
       ))}
@@ -19,7 +16,7 @@ function RatingList({ handleFieldChange }) {
 }
 
 RatingList.propTypes = {
-  handleFieldChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default RatingList;
