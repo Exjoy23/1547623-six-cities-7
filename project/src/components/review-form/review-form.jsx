@@ -14,7 +14,7 @@ function ReviewForm() {
     evt.preventDefault();
   };
 
-  const handleFieldChange = (evt) => {
+  const handleChange = (evt) => {
     const { name, value } = evt.target;
     setReview((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -29,13 +29,14 @@ function ReviewForm() {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <RatingList handleFieldChange={handleFieldChange} />
+      <RatingList handleChange={handleChange} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleFieldChange}
+        onChange={handleChange}
+        value={review.review}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -46,7 +47,9 @@ function ReviewForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.review.length < MIN_SYMBOL_COUNT && true}
+          disabled={
+            !(review.review.length >= MIN_SYMBOL_COUNT && review.rating)
+          }
         >
           Submit
         </button>
