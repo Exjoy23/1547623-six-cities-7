@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import CardItem from '../card-item/card-item';
 
-import offersProp from '../app/offers.prop';
+import { FAVORITES_TYPE } from '../../const';
 
-const FAVORITES_TYPE = 'FAVORITES';
+import offersProp from '../app/offers.prop';
 
 function FavoritesItem({ favoritesOffers, favoritesCity }) {
   const offers = favoritesOffers.filter(

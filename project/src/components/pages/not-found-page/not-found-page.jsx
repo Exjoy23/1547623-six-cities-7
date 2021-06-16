@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { AppRoute } from '../../../const';
+import Header from '../../header/header';
 
 function NotFoundPage() {
   return (
     <>
+      <Header />
       <h1
         style={{
           fontSize: '50px',
@@ -18,20 +18,6 @@ function NotFoundPage() {
       >
         404 Not Found
       </h1>
-      <Link
-        style={{
-          display: 'block',
-          textAlign: 'center',
-          width: '300px',
-          fontSize: '30px',
-          fontWeight: '700',
-          padding: '30px',
-          margin: '0 auto',
-        }}
-        to={AppRoute.MAIN}
-      >
-        Main Page
-      </Link>
     </>
   );
 }
