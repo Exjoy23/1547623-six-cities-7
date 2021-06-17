@@ -2,12 +2,10 @@ import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { AppRoute, CardType } from '../../const';
+import { AppRoute, CardType, MAIN_TYPE } from '../../const';
 import { getRatingInPercent } from '../../utils';
 
 import offersProp from '../app/offers.prop';
-
-const MAIN_TYPE = 'MAIN';
 
 function CardItem({
   offer: {
