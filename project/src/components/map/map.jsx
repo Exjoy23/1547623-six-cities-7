@@ -27,7 +27,11 @@ function Map({ city, offers }) {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
+
     if (map) {
+      markers.addTo(map);
+
       offers.forEach(({ location: { latitude, longitude } }) => {
         leaflet
           .marker(
@@ -39,9 +43,18 @@ function Map({ city, offers }) {
               icon: defaultCustomIcon,
             },
           )
-          .addTo(map);
+          .addTo(markers);
       });
+
+      map.flyTo(
+        [offers[0].city.location.latitude, offers[0].city.location.longitude],
+        offers[0].city.location.zoom,
+      );
     }
+
+    return () => {
+      markers.clearLayers();
+    };
   }, [map, offers]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;

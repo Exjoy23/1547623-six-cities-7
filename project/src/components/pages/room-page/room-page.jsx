@@ -15,6 +15,7 @@ import CardList from '../../card-list/card-list';
 
 import offersProp from '../../app/offers.prop';
 import reviewsProp from '../../app/reviews.prop';
+import { connect } from 'react-redux';
 
 function RoomPage({ offers, reviews }) {
   const location = useLocation();
@@ -155,4 +156,9 @@ RoomPage.propTypes = {
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
 };
 
-export default RoomPage;
+const mapStateToProps = ({ offers, reviews }) => ({
+  offers,
+  reviews,
+});
+
+export default connect(mapStateToProps)(RoomPage);
