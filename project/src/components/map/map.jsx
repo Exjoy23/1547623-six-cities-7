@@ -70,6 +70,7 @@ Map.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
+  activeCard: PropTypes.number,
 };
 
 const mapStateToProps = ({ activeCard }) => ({ activeCard });
