@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
@@ -48,4 +49,8 @@ FavoritesPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
 };
 
-export default FavoritesPage;
+const mapStateToProps = ({ offers }) => ({
+  offers,
+});
+
+export default connect(mapStateToProps)(FavoritesPage);

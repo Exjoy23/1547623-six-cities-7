@@ -52,3 +52,12 @@ export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 export const MAIN_TYPE = 'MAIN';
 export const FAVORITES_TYPE = 'FAVORITES';
 export const NEARBY_TYPE = 'NEARBY';
+
+export const LOCATIONS = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
