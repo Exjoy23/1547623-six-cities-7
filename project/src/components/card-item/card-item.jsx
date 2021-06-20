@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { generatePath, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { AppRoute, CardType, MAIN_TYPE } from '../../const';
 import { getRatingInPercent } from '../../utils';
+import { ActionCreator } from '../../store/action';
 
 import offersProp from '../app/offers.prop';
 
@@ -18,15 +20,20 @@ function CardItem({
     type,
     previewImage,
   },
-  setActiveCard = () => {},
+  hoverCard,
   itemType = MAIN_TYPE,
 }) {
+  useEffect(() => () => {
+    hoverCard(null);
+  });
+
   const cardRating = getRatingInPercent(rating);
 
   return (
     <article
       className={CardType[itemType].PLACE_CARD}
-      onMouseEnter={() => setActiveCard(id)}
+      onMouseEnter={() => itemType === MAIN_TYPE && hoverCard(id)}
+      onMouseLeave={() => itemType === MAIN_TYPE && hoverCard(null)}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -86,8 +93,12 @@ function CardItem({
 
 CardItem.propTypes = {
   offer: offersProp,
-  setActiveCard: PropTypes.func,
+  hoverCard: PropTypes.func.isRequired,
   itemType: PropTypes.string,
 };
 
-export default CardItem;
+const mapDispatchToProps = {
+  hoverCard: ActionCreator.hoverCard,
+};
+
+export default connect(null, mapDispatchToProps)(CardItem);

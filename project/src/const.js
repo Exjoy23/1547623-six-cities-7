@@ -25,14 +25,12 @@ export const CardType = {
     },
   },
   NEARBY: {
-    MAIN: {
-      PLACE_CARD: 'near-places__card place-card',
-      IMAGE_WRAPPER: 'near-places__image-wrapper place-card__image-wrapper',
-      CARD_INFO: 'place-card__info',
-      IMAGE: {
-        WIDTH: 260,
-        HEIGHT: 200,
-      },
+    PLACE_CARD: 'near-places__card place-card',
+    IMAGE_WRAPPER: 'near-places__image-wrapper place-card__image-wrapper',
+    CARD_INFO: 'place-card__info',
+    IMAGE: {
+      WIDTH: 260,
+      HEIGHT: 200,
     },
   },
 };
@@ -61,3 +59,19 @@ export const LOCATIONS = [
   'Hamburg',
   'Dusseldorf',
 ];
+
+export const SORTS = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];
+
+export const SortOptions = {
+  PRICE_LOW_FIRST: 'Price: low to high',
+  PRISE_HIGH_FIRST: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+};
+
+export const DEFAULT_SORT = 'Popular';
+export const DEFAULT_CITY = 'Paris';
