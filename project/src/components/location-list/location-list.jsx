@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { ActionCreator } from '../../store/action';
+import { fetchOfferList } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 
-function LocationList({ locations, city, changeCity }) {
+function LocationList({ locations, city, changeCity, loadOfferList }) {
   return (
     <ul className="locations__list tabs__list">
       {locations.map((item) => (
@@ -20,6 +21,7 @@ function LocationList({ locations, city, changeCity }) {
             to={AppRoute.MAIN}
             onClick={() => {
               changeCity(item);
+              loadOfferList();
             }}
             className={
               city === item
@@ -39,6 +41,7 @@ LocationList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   city: PropTypes.string.isRequired,
   changeCity: PropTypes.func.isRequired,
+  loadOfferList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ city }) => ({
@@ -47,6 +50,7 @@ const mapStateToProps = ({ city }) => ({
 
 const mapDispatchToProps = {
   changeCity: ActionCreator.changeCity,
+  loadOfferList: fetchOfferList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationList);

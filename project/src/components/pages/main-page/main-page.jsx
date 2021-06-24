@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 import Header from '../../header/header';
 import LocationList from '../../location-list/location-list';
 import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
+import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 
 import { LOCATIONS } from '../../../const';
 
 import offersProp from '../../app/offers.prop';
 
 function MainPage({ offers, city, activeSort }) {
+  const sortedOffers = offers.filter((item) => item.city.name === city);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -29,26 +32,13 @@ function MainPage({ offers, city, activeSort }) {
           </section>
         </div>
         <div className="cities">
-          {offers.length ? (
+          {(sortedOffers.length && (
             <MainPageWrapper
-              offers={offers}
+              offers={sortedOffers}
               city={city}
               activeSort={activeSort}
             />
-          ) : (
-            <div className="cities__places-container cities__places-container--empty container">
-              <section className="cities__no-places">
-                <div className="cities__status-wrapper tabs__content">
-                  <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">
-                    We could not find any property available at the moment in
-                    Dusseldorf
-                  </p>
-                </div>
-              </section>
-              <div className="cities__right-section"></div>
-            </div>
-          )}
+          )) || <EmptyPageWrapper />}
         </div>
       </main>
     </div>

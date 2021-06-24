@@ -1,15 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
+// import { isCheckedAuth } from '../../utils';
 
 import MainPage from '../pages/main-page/main-page';
 import SignInPage from '../pages/sign-in-page/sign-in-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import RoomPage from '../pages/room-page/room-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function App() {
+function App({ authorizationStatus, isDataLoaded }) {
+  if (!isDataLoaded) {
+    return <LoadingScreen />;
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -23,4 +31,16 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = ({ authorizationStatus, isDataLoaded }) => ({
+  authorizationStatus,
+  isDataLoaded,
+});
+
+export default connect(mapStateToProps)(App);
+
+// isCheckedAuth(authorizationStatus) ||

@@ -41,7 +41,7 @@ function CardItem({
         </div>
       )}
       <div className={CardType[itemType].IMAGE_WRAPPER}>
-        <Link to={{ pathname: generatePath(AppRoute.ROOM, { id }), state: id }}>
+        <Link to={{ pathname: generatePath(AppRoute.ROOM, { id }) }}>
           <img
             className="place-card__image"
             src={previewImage}
