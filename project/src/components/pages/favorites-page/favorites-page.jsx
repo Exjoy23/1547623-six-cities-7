@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
+import EmptyFavoritesWrapper from '../../empty-favorites-wrapper/empty-favorites-wrapper';
 
 import offersProp from '../../app/offers.prop';
 
@@ -19,15 +20,23 @@ function FavoritesPage({ offers }) {
     <div className="page">
       <Header />
 
-      <main className="page__main page__main--favorites">
+      <main
+        className={
+          favoritesOffers.length
+            ? 'page__main page__main--favorites'
+            : 'page__main page__main--favorites page__main--favorites-empty'
+        }
+      >
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList
-              favoritesCities={favoritesCities}
-              favoritesOffers={favoritesOffers}
-            />
-          </section>
+          {(favoritesOffers.length && (
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <FavoritesList
+                favoritesCities={favoritesCities}
+                favoritesOffers={favoritesOffers}
+              />
+            </section>
+          )) || <EmptyFavoritesWrapper />}
         </div>
       </main>
       <footer className="footer container">

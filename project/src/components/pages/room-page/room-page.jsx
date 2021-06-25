@@ -1,9 +1,10 @@
-import React from 'react';
-import { useLocation } from 'react-router';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { getRatingInPercent } from '../../../utils';
 import { NEARBY_TYPE } from '../../../const';
+import { fetchReviewList, fetchOfferList } from '../../../store/api-actions';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -17,10 +18,12 @@ import offersProp from '../../app/offers.prop';
 import reviewsProp from '../../app/reviews.prop';
 import { connect } from 'react-redux';
 
-function RoomPage({ offers, reviews }) {
+function RoomPage({ offers, reviews, loadReviewList }) {
   const location = useLocation();
 
-  const offer = offers.find((item) => item.id === location.state);
+  const roomId = +location.pathname.replace(/\D+/g, '');
+
+  const offer = offers.find((item) => item.id === roomId);
 
   const {
     images,
@@ -38,6 +41,10 @@ function RoomPage({ offers, reviews }) {
   } = offer;
 
   const cardRating = getRatingInPercent(rating);
+
+  useEffect(() => {
+    loadReviewList(roomId);
+  }, [roomId, loadReviewList]);
 
   return (
     <div className="page">
@@ -154,6 +161,7 @@ function RoomPage({ offers, reviews }) {
 RoomPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  loadReviewList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ offers, reviews }) => ({
@@ -161,4 +169,9 @@ const mapStateToProps = ({ offers, reviews }) => ({
   reviews,
 });
 
-export default connect(mapStateToProps)(RoomPage);
+const mapDispatchToProps = {
+  loadReviewList: fetchReviewList,
+  loadOfferList: fetchOfferList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);

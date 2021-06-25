@@ -1,15 +1,15 @@
-import offers from '../mocks/offers';
-import reviews from '../mocks/reviews';
 import { ActionType } from './action';
 
-import { DEFAULT_CITY, DEFAULT_SORT } from '../const';
+import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../const';
 
 const initialState = {
   city: DEFAULT_CITY,
   activeSort: DEFAULT_SORT,
   activeCard: null,
-  offers: offers.filter(({ city }) => city.name === DEFAULT_CITY),
-  reviews,
+  offers: [],
+  reviews: [],
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -19,7 +19,6 @@ export const reducer = (state = initialState, action) => {
         ...state,
         city: action.payload,
         activeSort: DEFAULT_SORT,
-        offers: offers.filter(({ city }) => city.name === action.payload),
       };
     case ActionType.CHANGE_SORT:
       return {
@@ -30,6 +29,27 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCard: action.payload,
+      };
+    case ActionType.LOAD_OFFERS:
+      return {
+        ...state,
+        offers: action.payload,
+        isDataLoaded: true,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;

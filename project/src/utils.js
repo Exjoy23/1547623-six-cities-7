@@ -1,4 +1,4 @@
-import { SortOptions } from './const';
+import { AuthorizationStatus, SortOptions } from './const';
 
 const MAX_RATING = 5;
 const MAX_PERCENT = 100;
@@ -18,3 +18,6 @@ export const sortOffers = (sort, offers) => {
       return offers;
   }
 };
+
+export const isCheckedAuth = (authorizationStatus) =>
+  authorizationStatus === AuthorizationStatus.UNKNOWN;

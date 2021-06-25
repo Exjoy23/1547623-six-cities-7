@@ -75,3 +75,16 @@ export const SortOptions = {
 
 export const DEFAULT_SORT = 'Popular';
 export const DEFAULT_CITY = 'Paris';
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
+  REVIEWS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
