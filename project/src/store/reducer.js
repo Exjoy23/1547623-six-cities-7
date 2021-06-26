@@ -7,7 +7,9 @@ const initialState = {
   activeSort: DEFAULT_SORT,
   activeCard: null,
   offers: [],
+  offersNearby: [],
   reviews: [],
+  user: {},
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
 };
@@ -36,10 +38,20 @@ export const reducer = (state = initialState, action) => {
         offers: action.payload,
         isDataLoaded: true,
       };
+    case ActionType.LOAD_OFFERS_NEARBY:
+      return {
+        ...state,
+        offersNearby: action.payload,
+      };
     case ActionType.LOAD_REVIEWS:
       return {
         ...state,
         reviews: action.payload,
+      };
+    case ActionType.LOAD_USER_INFO:
+      return {
+        ...state,
+        user: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

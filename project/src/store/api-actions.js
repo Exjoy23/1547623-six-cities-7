@@ -1,49 +1,31 @@
 import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute } from '../const';
+import { adaptOffer, adaptReview, adaptUserInfo } from '../utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) =>
   api.get(APIRoute.OFFERS).then(({ data }) => {
-    dispatch(
-      ActionCreator.loadOffers(
-        data.map((item) => ({
-          ...item,
-          isFavorite: item.is_favorite,
-          isPremium: item.is_premium,
-          maxAdults: item.max_adults,
-          previewImage: item.preview_image,
-          host: {
-            ...item.host,
-            isPro: item.host.is_pro,
-            avatarUrl: item.host.avatar_url,
-          },
-        })),
-      ),
-    );
+    dispatch(ActionCreator.loadOffers(data.map((item) => adaptOffer(item))));
   });
+
+export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
+  api
+    .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+    .then(({ data }) => {
+      dispatch(
+        ActionCreator.loadOffersNearby(data.map((item) => adaptOffer(item))),
+      );
+    });
 
 export const fetchReviewList = (id) => (dispatch, _getState, api) =>
   api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
-    dispatch(
-      ActionCreator.loadReviews(
-        data.map((item) => ({
-          ...item,
-          user: {
-            ...item.user,
-            avatarUrl: item.user.avatar_url,
-            isPro: item.user.is_pro,
-          },
-        })),
-      ),
-    );
+    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReview(item))));
   });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.LOGIN)
     .then(() =>
-      dispatch(
-        ActionCreator.requireAuthorization(AuthorizationStatus.AUTH),
-      ).catch(() => {}),
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
     );
 
 export const login =
@@ -51,7 +33,11 @@ export const login =
     (dispatch, _getState, api) =>
       api
         .post(APIRoute.LOGIN, { email, password })
-        .then(({ data }) => localStorage.setItem('token', data.token))
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token);
+
+          dispatch(ActionCreator.loadUserInfo(adaptUserInfo(data)));
+        })
         .then(() =>
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
         );

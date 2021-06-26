@@ -84,6 +84,7 @@ export const AuthorizationStatus = {
 
 export const APIRoute = {
   OFFERS: '/hotels',
+  OFFERS_NEARBY: '/nearby',
   REVIEWS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',

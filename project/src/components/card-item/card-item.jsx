@@ -3,7 +3,7 @@ import { generatePath, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { AppRoute, CardType, MAIN_TYPE } from '../../const';
+import { AppRoute, CardType, MAIN_TYPE, NEARBY_TYPE } from '../../const';
 import { getRatingInPercent } from '../../utils';
 import { ActionCreator } from '../../store/action';
 
@@ -34,6 +34,7 @@ function CardItem({
       className={CardType[itemType].PLACE_CARD}
       onMouseEnter={() => itemType === MAIN_TYPE && hoverCard(id)}
       onMouseLeave={() => itemType === MAIN_TYPE && hoverCard(null)}
+      onClick={() => itemType === NEARBY_TYPE && window.scroll(0, 0)}
     >
       {isPremium && (
         <div className="place-card__mark">

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 
 import { getRatingInPercent } from '../../../utils';
 import { NEARBY_TYPE } from '../../../const';
-import { fetchReviewList, fetchOfferList } from '../../../store/api-actions';
+import {
+  fetchReviewList,
+  fetchOfferNearbyList
+} from '../../../store/api-actions';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -18,7 +21,13 @@ import offersProp from '../../app/offers.prop';
 import reviewsProp from '../../app/reviews.prop';
 import { connect } from 'react-redux';
 
-function RoomPage({ offers, reviews, loadReviewList }) {
+function RoomPage({
+  offers,
+  offersNearby,
+  reviews,
+  loadReviewList,
+  loadOfferNearbyList,
+}) {
   const location = useLocation();
 
   const roomId = +location.pathname.replace(/\D+/g, '');
@@ -44,7 +53,8 @@ function RoomPage({ offers, reviews, loadReviewList }) {
 
   useEffect(() => {
     loadReviewList(roomId);
-  }, [roomId, loadReviewList]);
+    loadOfferNearbyList(roomId);
+  }, [roomId, loadReviewList, loadOfferNearbyList]);
 
   return (
     <div className="page">
@@ -150,7 +160,7 @@ function RoomPage({ offers, reviews, loadReviewList }) {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <CardList offers={offers} itemType={NEARBY_TYPE} />
+            <CardList offers={offersNearby} itemType={NEARBY_TYPE} />
           </section>
         </div>
       </main>
@@ -160,18 +170,21 @@ function RoomPage({ offers, reviews, loadReviewList }) {
 
 RoomPage.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
+  offersNearby: PropTypes.arrayOf(offersProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
   loadReviewList: PropTypes.func.isRequired,
+  loadOfferNearbyList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ offers, reviews }) => ({
+const mapStateToProps = ({ offers, offersNearby, reviews }) => ({
   offers,
+  offersNearby,
   reviews,
 });
 
 const mapDispatchToProps = {
   loadReviewList: fetchReviewList,
-  loadOfferList: fetchOfferList,
+  loadOfferNearbyList: fetchOfferNearbyList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);
