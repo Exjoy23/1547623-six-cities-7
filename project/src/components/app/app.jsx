@@ -6,6 +6,8 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const';
 // import { isCheckedAuth } from '../../utils';
 
+import PrivateRoute from '../private-route/private-route';
+
 import MainPage from '../pages/main-page/main-page';
 import SignInPage from '../pages/sign-in-page/sign-in-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
@@ -23,7 +25,11 @@ function App({ authorizationStatus, isDataLoaded }) {
       <Switch>
         <Route exact path={AppRoute.MAIN} component={MainPage} />
         <Route exact path={AppRoute.SIGN_IN} component={SignInPage} />
-        <Route exact path={AppRoute.FAVORITES} component={FavoritesPage} />
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesPage />}
+        />
         <Route exact path={AppRoute.ROOM} component={RoomPage} />
         <Route component={NotFoundPage} />
       </Switch>

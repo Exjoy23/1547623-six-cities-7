@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { AppRoute } from '../../const';
+import UserAuth from '../user-auth/user-auth';
 
-function PageHeader() {
+import { AppRoute, AuthorizationStatus } from '../../const';
+
+function Header({ authorizationStatus }) {
   return (
     <header className="header">
       <div className="container">
@@ -32,22 +36,26 @@ function PageHeader() {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <NavLink
-                  className="header__nav-link header__nav-link--profile"
-                  to={AppRoute.SIGN_IN}
-                  isActive={(match, { pathname }) =>
-                    match && pathname === AppRoute.SIGN_IN}
-                  activeStyle={{
-                    cursor: 'default',
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                  }}
-                >
-                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__login">Sign in</span>
-                </NavLink>
-              </li>
+              {(authorizationStatus === AuthorizationStatus.AUTH && (
+                <UserAuth />
+              )) || (
+                <li className="header__nav-item user">
+                  <NavLink
+                    className="header__nav-link header__nav-link--profile"
+                    to={AppRoute.SIGN_IN}
+                    isActive={(match, { pathname }) =>
+                      match && pathname === AppRoute.SIGN_IN}
+                    activeStyle={{
+                      cursor: 'default',
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    }}
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__login">Sign in</span>
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </nav>
         </div>
@@ -56,4 +64,12 @@ function PageHeader() {
   );
 }
 
-export default PageHeader;
+Header.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = ({ authorizationStatus }) => ({
+  authorizationStatus,
+});
+
+export default connect(mapStateToProps)(Header);

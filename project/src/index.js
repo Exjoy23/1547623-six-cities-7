@@ -24,7 +24,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
-// store.dispatch(checkAuth());
 store.dispatch(fetchOfferList());
 
 ReactDOM.render(
