@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { getRatingInPercent } from '../../../utils';
-import { NEARBY_TYPE } from '../../../const';
+import { NEARBY_TYPE, AuthorizationStatus } from '../../../const';
 import {
   fetchReviewList,
-  fetchOfferNearbyList
+  fetchOfferNearbyList,
+  fetchOffer
 } from '../../../store/api-actions';
+import { ActionCreator } from '../../../store/action';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -16,23 +18,28 @@ import ReviewForm from '../../review-form/review-form';
 import ImageList from '../../image-list/image-list';
 import GoodsList from '../../goods-list/goods-list';
 import CardList from '../../card-list/card-list';
+import LoadingScreen from '../../loading-screen/loading-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 import offersProp from '../../app/offers.prop';
 import reviewsProp from '../../app/reviews.prop';
 import { connect } from 'react-redux';
 
 function RoomPage({
-  offers,
-  offersNearby,
-  reviews,
+  offers = [],
+  offersNearby = [],
+  reviews = [],
   loadReviewList,
+  loadOffer,
   loadOfferNearbyList,
+  authorizationStatus,
+  setIsLoadOffers,
+  isDataLoaded,
 }) {
+  const [isError, setIsError] = useState(false);
   const location = useLocation();
 
   const roomId = +location.pathname.replace(/\D+/g, '');
-
-  const offer = offers.find((item) => item.id === roomId);
 
   const {
     images,
@@ -47,14 +54,32 @@ function RoomPage({
     price,
     goods,
     host,
-  } = offer;
+  } = offers.length && offers[0];
 
   const cardRating = getRatingInPercent(rating);
 
   useEffect(() => {
+    (async () => {
+      try {
+        await setIsLoadOffers(false);
+        await loadOffer(roomId);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+      }
+    })();
+
     loadReviewList(roomId);
     loadOfferNearbyList(roomId);
-  }, [roomId, loadReviewList, loadOfferNearbyList]);
+  }, [roomId, loadOffer, loadReviewList, loadOfferNearbyList, setIsLoadOffers]);
+
+  if (isError) {
+    return <NotFoundPage />;
+  }
+
+  if (!isDataLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page">
@@ -147,7 +172,9 @@ function RoomPage({
                   <span className="reviews__amount">{reviews.length}</span>
                 </h2>
                 <ReviewList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.AUTH && (
+                  <ReviewForm id={roomId} />
+                )}
               </section>
             </div>
           </div>
@@ -173,18 +200,32 @@ RoomPage.propTypes = {
   offersNearby: PropTypes.arrayOf(offersProp).isRequired,
   reviews: PropTypes.arrayOf(reviewsProp).isRequired,
   loadReviewList: PropTypes.func.isRequired,
+  loadOffer: PropTypes.func.isRequired,
   loadOfferNearbyList: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  setIsLoadOffers: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ offers, offersNearby, reviews }) => ({
+const mapStateToProps = ({
   offers,
   offersNearby,
   reviews,
+  authorizationStatus,
+  isDataLoaded,
+}) => ({
+  offers,
+  offersNearby,
+  reviews,
+  authorizationStatus,
+  isDataLoaded,
 });
 
 const mapDispatchToProps = {
   loadReviewList: fetchReviewList,
   loadOfferNearbyList: fetchOfferNearbyList,
+  loadOffer: fetchOffer,
+  setIsLoadOffers: ActionCreator.setIsLoadOffers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);

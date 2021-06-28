@@ -51,6 +51,8 @@ function Map({ city, offers, activeCard }) {
         [offers[0].city.location.latitude, offers[0].city.location.longitude],
         offers[0].city.location.zoom,
       );
+
+      map.scrollWheelZoom.disable();
     }
 
     return () => {

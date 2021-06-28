@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import UserAuth from '../user-auth/user-auth';
+import UserNoAuth from '../user-no-auth/user-no-auth';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 
@@ -36,25 +37,10 @@ function Header({ authorizationStatus }) {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {(authorizationStatus === AuthorizationStatus.AUTH && (
+              {authorizationStatus === AuthorizationStatus.AUTH ? (
                 <UserAuth />
-              )) || (
-                <li className="header__nav-item user">
-                  <NavLink
-                    className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.SIGN_IN}
-                    isActive={(match, { pathname }) =>
-                      match && pathname === AppRoute.SIGN_IN}
-                    activeStyle={{
-                      cursor: 'default',
-                      pointerEvents: 'none',
-                      userSelect: 'none',
-                    }}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__login">Sign in</span>
-                  </NavLink>
-                </li>
+              ) : (
+                <UserNoAuth />
               )}
             </ul>
           </nav>

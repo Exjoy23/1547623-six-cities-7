@@ -8,10 +8,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { reducer } from './store/reducer';
 import { createAPI } from './services/api';
 import { ActionCreator } from './store/action';
-import { fetchOfferList } from './store/api-actions';
 import { AuthorizationStatus } from './const';
 
 import App from './components/app/app';
+import { redirect } from './store/middleware';
 
 const api = createAPI(() =>
   store.dispatch(
@@ -21,10 +21,8 @@ const api = createAPI(() =>
 
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api), redirect)),
 );
-
-store.dispatch(fetchOfferList());
 
 ReactDOM.render(
   <React.StrictMode>
