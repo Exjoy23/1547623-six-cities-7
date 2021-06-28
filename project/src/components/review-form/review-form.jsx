@@ -14,11 +14,11 @@ function ReviewForm({ submit, id, loadReviewList }) {
     review: '',
   });
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    await submit({ comment: review.review, rating: review.rating, id });
-    loadReviewList(id);
+    submit({ comment: review.review, rating: review.rating, id });
+
     setReview((state) => ({
       ...state,
       review: '',

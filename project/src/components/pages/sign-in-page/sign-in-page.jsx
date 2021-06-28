@@ -10,7 +10,7 @@ import { login } from '../../../store/api-actions';
 
 import Header from '../../header/header';
 
-function SignInPage({ changeCity, onSubmit, redirectToRoute }) {
+function SignInPage({ changeCity, onSubmit }) {
   const [password, setPassword] = useState('');
 
   const handleChange = (evt) => {
@@ -91,7 +91,6 @@ function SignInPage({ changeCity, onSubmit, redirectToRoute }) {
 SignInPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   changeCity: PropTypes.func.isRequired,
-  redirectToRoute: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

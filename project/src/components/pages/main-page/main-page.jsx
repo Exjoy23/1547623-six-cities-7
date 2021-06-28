@@ -6,28 +6,18 @@ import Header from '../../header/header';
 import LocationList from '../../location-list/location-list';
 import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
-import LoadingScreen from '../../loading-screen/loading-screen';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 
 import { fetchOfferList } from '../../../store/api-actions';
-import { ActionCreator } from '../../../store/action';
 
 import { Locations } from '../../../const';
 
 import offersProp from '../../app/offers.prop';
 
-function MainPage({
-  offers,
-  city,
-  activeSort,
-  loadOffers,
-  isDataLoaded,
-  setIsLoadOffers,
-}) {
+function MainPage({ offers, city, activeSort, loadOffers, isDataLoaded }) {
   useEffect(() => {
-    setIsLoadOffers(false);
     loadOffers();
-  }, [loadOffers, setIsLoadOffers]);
+  }, [loadOffers]);
 
   const sortedOffers = offers.filter((item) => item.city.name === city);
 
@@ -49,7 +39,7 @@ function MainPage({
           </section>
         </div>
         <div className="cities">
-          <LoadWrapper isLoad={isDataLoaded} Spinner={LoadingScreen}>
+          <LoadWrapper isLoad={isDataLoaded}>
             {(sortedOffers.length && (
               <MainPageWrapper
                 offers={sortedOffers}
@@ -70,7 +60,6 @@ MainPage.propTypes = {
   activeSort: PropTypes.string.isRequired,
   loadOffers: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  setIsLoadOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ offers, city, activeSort, isDataLoaded }) => ({
@@ -82,7 +71,6 @@ const mapStateToProps = ({ offers, city, activeSort, isDataLoaded }) => ({
 
 const mapDispatchToProps = {
   loadOffers: fetchOfferList,
-  setIsLoadOffers: ActionCreator.setIsLoadOffers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

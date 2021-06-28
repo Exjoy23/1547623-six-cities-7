@@ -2,18 +2,31 @@ import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
 import { adaptOffer, adaptReview, adaptUserInfo } from '../adapters';
 
-export const fetchOffer = (id) => (dispatch, _getState, api) =>
-  api.get(`${APIRoute.OFFERS}/${id}`).then(({ data }) => {
-    dispatch(ActionCreator.loadOffer(adaptOffer(data)));
-  });
+export const fetchOffer = (id) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setIsLoadOffers(false));
+  api
+    .get(`${APIRoute.OFFERS}/${id}`)
+    .then(({ data }) => {
+      dispatch(ActionCreator.loadOffer(adaptOffer(data)));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.loadOffers([]));
+      dispatch(ActionCreator.setIsLoadOffers(true));
+    });
+};
 
-export const fetchOfferList = () => (dispatch, _getState, api) =>
+export const fetchOfferList = () => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setIsLoadOffers(false));
   api
     .get(APIRoute.OFFERS)
     .then(({ data }) => {
       dispatch(ActionCreator.loadOffers(data.map(adaptOffer)));
     })
-    .catch(() => dispatch(ActionCreator.loadOffers([])));
+    .catch(() => {
+      dispatch(ActionCreator.loadOffers([]));
+      dispatch(ActionCreator.setIsLoadOffers(true));
+    });
+};
 
 export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
   api
@@ -58,4 +71,8 @@ export const logout = () => (dispatch, _getState, api) =>
 export const sendReview =
   ({ comment, rating, id }) =>
     (dispatch, _getState, api) =>
-      api.post(`${APIRoute.REVIEWS}/${id}`, { comment, rating });
+      api
+        .post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
+        .then(({ data }) => {
+          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
+        });
