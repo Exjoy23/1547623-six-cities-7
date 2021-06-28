@@ -1,5 +1,5 @@
 import { ActionCreator } from './action';
-import { AuthorizationStatus, APIRoute } from '../const';
+import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
 import { adaptOffer, adaptReview, adaptUserInfo } from '../adapters';
 
 export const fetchOffer = (id) => (dispatch, _getState, api) =>
@@ -46,7 +46,8 @@ export const login =
         })
         .then(() =>
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
-        );
+        )
+        .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { AppRoute, Locations } from '../../../const';
+import { Locations } from '../../../const';
 
 import { ActionCreator } from '../../../store/action';
 import { login } from '../../../store/api-actions';
@@ -25,7 +25,7 @@ function SignInPage({ changeCity, onSubmit, redirectToRoute }) {
     onSubmit({
       login: loginRef.current.value,
       password: password,
-    }).then(() => redirectToRoute(AppRoute.MAIN));
+    });
   };
 
   return (
