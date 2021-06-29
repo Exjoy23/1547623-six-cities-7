@@ -1,24 +1,43 @@
 import { ActionCreator } from './action';
-import { AuthorizationStatus, APIRoute } from '../const';
-import { adaptOffer, adaptReview, adaptUserInfo } from '../utils';
+import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
+import { adaptOffer, adaptReview, adaptUserInfo } from '../adapters';
 
-export const fetchOfferList = () => (dispatch, _getState, api) =>
-  api.get(APIRoute.OFFERS).then(({ data }) => {
-    dispatch(ActionCreator.loadOffers(data.map((item) => adaptOffer(item))));
-  });
+export const fetchOffer = (id) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setIsLoadOffers(false));
+  api
+    .get(`${APIRoute.OFFERS}/${id}`)
+    .then(({ data }) => {
+      dispatch(ActionCreator.loadOffer(adaptOffer(data)));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.loadOffers([]));
+      dispatch(ActionCreator.setIsLoadOffers(true));
+    });
+};
+
+export const fetchOfferList = () => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setIsLoadOffers(false));
+  api
+    .get(APIRoute.OFFERS)
+    .then(({ data }) => {
+      dispatch(ActionCreator.loadOffers(data.map(adaptOffer)));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.loadOffers([]));
+      dispatch(ActionCreator.setIsLoadOffers(true));
+    });
+};
 
 export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
   api
     .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
     .then(({ data }) => {
-      dispatch(
-        ActionCreator.loadOffersNearby(data.map((item) => adaptOffer(item))),
-      );
+      dispatch(ActionCreator.loadOffersNearby(data.map(adaptOffer)));
     });
 
 export const fetchReviewList = (id) => (dispatch, _getState, api) =>
   api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
-    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReview(item))));
+    dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
   });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
@@ -40,10 +59,20 @@ export const login =
         })
         .then(() =>
           dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
-        );
+        )
+        .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api
     .delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()));
+
+export const sendReview =
+  ({ comment, rating, id }) =>
+    (dispatch, _getState, api) =>
+      api
+        .post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
+        .then(({ data }) => {
+          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
+        });

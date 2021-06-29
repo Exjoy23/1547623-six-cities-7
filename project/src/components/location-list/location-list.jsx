@@ -21,7 +21,6 @@ function LocationList({ locations, city, changeCity, loadOfferList }) {
             to={AppRoute.MAIN}
             onClick={() => {
               changeCity(item);
-              loadOfferList();
             }}
             className={
               city === item

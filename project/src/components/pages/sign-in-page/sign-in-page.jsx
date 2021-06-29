@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { AppRoute, LOCATIONS } from '../../../const';
+import { Locations } from '../../../const';
 
 import { ActionCreator } from '../../../store/action';
 import { login } from '../../../store/api-actions';
@@ -19,8 +19,6 @@ function SignInPage({ changeCity, onSubmit }) {
 
   const loginRef = useRef(null);
 
-  const history = useHistory();
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -28,8 +26,6 @@ function SignInPage({ changeCity, onSubmit }) {
       login: loginRef.current.value,
       password: password,
     });
-
-    history.push(AppRoute.MAIN);
   };
 
   return (
@@ -80,7 +76,9 @@ function SignInPage({ changeCity, onSubmit }) {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="/">
-                <span onClick={() => changeCity(LOCATIONS[3])}>Amsterdam</span>
+                <span onClick={() => changeCity(Locations.AMSTERDAM)}>
+                  Amsterdam
+                </span>
               </Link>
             </div>
           </section>
@@ -98,6 +96,7 @@ SignInPage.propTypes = {
 const mapDispatchToProps = {
   onSubmit: login,
   changeCity: ActionCreator.changeCity,
+  redirectToRoute: ActionCreator.redirectToRoute,
 };
 
 export default connect(null, mapDispatchToProps)(SignInPage);

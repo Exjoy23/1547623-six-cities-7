@@ -9,9 +9,9 @@ import { logout } from '../../store/api-actions';
 import { ActionCreator } from '../../store/action';
 
 function UserAuth({ email, avatarUrl, goOut, loadUserInfo }) {
-  const handleClick = () => {
+  const handleClick = async () => {
+    await goOut();
     loadUserInfo({});
-    goOut();
   };
 
   return (

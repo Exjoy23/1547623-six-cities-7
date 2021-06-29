@@ -51,14 +51,14 @@ export const MAIN_TYPE = 'MAIN';
 export const FAVORITES_TYPE = 'FAVORITES';
 export const NEARBY_TYPE = 'NEARBY';
 
-export const LOCATIONS = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
+export const Locations = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
 
 export const SORTS = [
   'Popular',
@@ -74,7 +74,6 @@ export const SortOptions = {
 };
 
 export const DEFAULT_SORT = 'Popular';
-export const DEFAULT_CITY = 'Paris';
 
 export const AuthorizationStatus = {
   AUTH: 'AUTH',

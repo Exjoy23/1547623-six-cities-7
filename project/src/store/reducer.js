@@ -1,9 +1,9 @@
 import { ActionType } from './action';
 
-import { DEFAULT_CITY, DEFAULT_SORT, AuthorizationStatus } from '../const';
+import { Locations, DEFAULT_SORT, AuthorizationStatus } from '../const';
 
 const initialState = {
-  city: DEFAULT_CITY,
+  city: Locations.PARIS,
   activeSort: DEFAULT_SORT,
   activeCard: null,
   offers: [],
@@ -31,6 +31,17 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCard: action.payload,
+      };
+    case ActionType.SET_IS_LOAD_OFFERS:
+      return {
+        ...state,
+        isDataLoaded: action.payload,
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offers: [action.payload],
+        isDataLoaded: true,
       };
     case ActionType.LOAD_OFFERS:
       return {
