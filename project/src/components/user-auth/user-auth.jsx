@@ -25,8 +25,7 @@ function UserAuth() {
           className="header__nav-link header__nav-link--profile"
           to={AppRoute.FAVORITES}
           isActive={(match, { pathname }) =>
-            match && pathname === AppRoute.FAVORITES
-          }
+            match && pathname === AppRoute.FAVORITES}
           activeStyle={{
             pointerEvents: 'none',
             userSelect: 'none',

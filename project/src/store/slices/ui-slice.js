@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Locations, DEFAULT_SORT } from '../../const';
 
+const SLICE_NAME = 'ui';
+
 const initialState = {
   city: Locations.PARIS,
   activeSort: DEFAULT_SORT,
@@ -9,7 +11,7 @@ const initialState = {
 };
 
 const uiSlice = createSlice({
-  name: 'ui',
+  name: SLICE_NAME,
   initialState,
   reducers: {
     changeCity(state, { payload }) {

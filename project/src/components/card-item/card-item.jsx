@@ -31,11 +31,9 @@ function CardItem({
     <article
       className={CardType[itemType].PLACE_CARD}
       onMouseEnter={() =>
-        itemType === MAIN_TYPE && dispatch(changeActiveCard(id))
-      }
+        itemType === MAIN_TYPE && dispatch(changeActiveCard(id))}
       onMouseLeave={() =>
-        itemType === MAIN_TYPE && dispatch(changeActiveCard(null))
-      }
+        itemType === MAIN_TYPE && dispatch(changeActiveCard(null))}
     >
       {isPremium && (
         <div className="place-card__mark">

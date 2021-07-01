@@ -6,6 +6,15 @@ import { adaptOffer, adaptReview } from '../../adapters';
 
 import { sendReview } from './user-slice';
 
+const SLICE_NAME = 'data';
+
+const ActionType = {
+  LOAD_OFFER: 'data/loadOffer',
+  LOAD_OFFERS: 'data/loadOffers',
+  LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
+  LOAD_REVIEWS: 'data/loadReviews',
+};
+
 const initialState = {
   offers: [],
   offersNearby: [],
@@ -13,7 +22,7 @@ const initialState = {
   isDataLoaded: false,
 };
 
-export const loadOffer = createAsyncThunk('data/loadOffer', async (id) => {
+export const loadOffer = createAsyncThunk(ActionType.LOAD_OFFER, async (id) => {
   try {
     const response = await api.get(`${APIRoute.OFFERS}/${id}`);
     return response.data;
@@ -22,7 +31,7 @@ export const loadOffer = createAsyncThunk('data/loadOffer', async (id) => {
   }
 });
 
-export const loadOffers = createAsyncThunk('data/loadOffers', async () => {
+export const loadOffers = createAsyncThunk(ActionType.LOAD_OFFERS, async () => {
   try {
     const response = await api.get(APIRoute.OFFERS);
     return response.data;
@@ -32,7 +41,7 @@ export const loadOffers = createAsyncThunk('data/loadOffers', async () => {
 });
 
 export const loadOffersNearby = createAsyncThunk(
-  'data/loadOffersNearby',
+  ActionType.LOAD_OFFERS_NEARBY,
   async (id) => {
     try {
       const response = await api.get(
@@ -45,17 +54,20 @@ export const loadOffersNearby = createAsyncThunk(
   },
 );
 
-export const loadReviews = createAsyncThunk('data/loadReviews', async (id) => {
-  try {
-    const response = await api.get(`${APIRoute.REVIEWS}/${id}`);
-    return response.data;
-  } catch (error) {
-    return [];
-  }
-});
+export const loadReviews = createAsyncThunk(
+  ActionType.LOAD_REVIEWS,
+  async (id) => {
+    try {
+      const response = await api.get(`${APIRoute.REVIEWS}/${id}`);
+      return response.data;
+    } catch (error) {
+      return [];
+    }
+  },
+);
 
 const dataSlice = createSlice({
-  name: 'data',
+  name: SLICE_NAME,
   initialState,
   extraReducers: {
     [loadOffer.pending]: (state) => {

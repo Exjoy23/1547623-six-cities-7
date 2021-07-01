@@ -19,8 +19,7 @@ function PrivateRoute({ render, path, exact }) {
           render(routeProps)
         ) : (
           <Redirect to={AppRoute.SIGN_IN} />
-        )
-      }
+        )}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import CardItem from '../card-item/card-item';
@@ -22,4 +22,4 @@ CardList.propTypes = {
   itemType: PropTypes.string,
 };
 
-export default memo(CardList);
+export default CardList;

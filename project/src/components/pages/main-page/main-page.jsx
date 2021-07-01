@@ -12,11 +12,9 @@ import { loadOffers } from '../../../store/slices/data-slice';
 import { Locations } from '../../../const';
 
 function MainPage() {
-  const { offers, city, isDataLoaded } = useSelector((state) => ({
-    offers: state.dataSlice.offers,
-    city: state.uiSlice.city,
-    isDataLoaded: state.dataSlice.isDataLoaded,
-  }));
+  const city = useSelector(({ uiSlice }) => uiSlice.city);
+  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
+  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
 
   const dispatch = useDispatch();
 

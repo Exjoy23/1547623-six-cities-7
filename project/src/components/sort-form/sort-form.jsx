@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import SortList from '../sort-list/sort-list';
@@ -42,4 +42,4 @@ SortForm.propTypes = {
   activeSort: PropTypes.string.isRequired,
 };
 
-export default memo(SortForm);
+export default SortForm;

@@ -1,8 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { api } from '../../index';
-import { APIRoute, AuthorizationStatus } from '../../const';
-import { adaptUserInfo, adaptReview } from '../../adapters';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
+import { adaptUserInfo } from '../../adapters';
+
+const SLICE_NAME = 'user';
+const TOKEN = 'token';
+
+export const ActionType = {
+  LOGIN: 'user/login',
+  LOGOUT: 'user/logout',
+  SEND_REVIEW: 'user/sendReview',
+  REDIRECT_TO_ROUTE: 'user/redirectToRoute',
+};
 
 const initialState = {
   user: {},
@@ -10,21 +20,27 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
+const redirectToRoute = (route) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: route,
+});
+
 export const login = createAsyncThunk(
-  'user/login',
-  async ({ login: email, password }) => {
+  ActionType.LOGIN,
+  async ({ login: email, password }, thunkAPI) => {
     const response = await api.post(APIRoute.LOGIN, { email, password });
+    thunkAPI.dispatch(redirectToRoute(AppRoute.MAIN));
     return response.data;
   },
 );
 
-export const logout = createAsyncThunk('user/logout', async () => {
+export const logout = createAsyncThunk(ActionType.LOGOUT, async () => {
   const response = await api.delete(APIRoute.LOGOUT);
   return response.data;
 });
 
 export const sendReview = createAsyncThunk(
-  'user/sendReview',
+  ActionType.SEND_REVIEW,
   async ({ comment, rating, id }) => {
     const response = await api.post(`${APIRoute.REVIEWS}/${id}`, {
       comment,
@@ -35,16 +51,16 @@ export const sendReview = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: SLICE_NAME,
   initialState,
   extraReducers: {
     [login.fulfilled]: (state, { payload }) => {
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem(TOKEN, payload.token);
       state.user = adaptUserInfo(payload);
       state.authorizationStatus = AuthorizationStatus.AUTH;
     },
     [logout.fulfilled]: (state) => {
-      localStorage.removeItem('token');
+      localStorage.removeItem(TOKEN);
       state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       state.user = {};
     },

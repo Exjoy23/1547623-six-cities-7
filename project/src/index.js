@@ -7,17 +7,12 @@ import dataSlice from './store/slices/data-slice';
 import uiSlice from './store/slices/ui-slice';
 import userSlice from './store/slices/user-slice';
 
+import { redirect } from './store/middlewares/redirect';
 import { createAPI } from './services/api';
-import { ActionCreator } from './store/action';
-import { AuthorizationStatus } from './const';
 
 import App from './components/app/app';
 
-export const api = createAPI(() =>
-  store.dispatch(
-    ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH),
-  ),
-);
+export const api = createAPI();
 
 const store = configureStore({
   reducer: {
@@ -25,6 +20,7 @@ const store = configureStore({
     uiSlice,
     userSlice,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(redirect),
 });
 
 ReactDOM.render(

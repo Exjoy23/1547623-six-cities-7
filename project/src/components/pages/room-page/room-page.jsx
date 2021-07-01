@@ -8,7 +8,7 @@ import { NEARBY_TYPE, AuthorizationStatus } from '../../../const';
 import {
   loadOffer,
   loadOffersNearby,
-  loadReviews,
+  loadReviews
 } from '../../../store/slices/data-slice';
 import { changeActiveCard } from '../../../store/slices/ui-slice';
 
@@ -24,14 +24,14 @@ import LoadWrapper from '../../load-wrapper/load-wrapper';
 
 function RoomPage() {
   const location = useLocation();
-  const { offers, isDataLoaded, offersNearby, reviews, authorizationStatus } =
-    useSelector((state) => ({
-      isDataLoaded: state.dataSlice.isDataLoaded,
-      offers: state.dataSlice.offers,
-      offersNearby: state.dataSlice.offersNearby,
-      reviews: state.dataSlice.reviews,
-      authorizationStatus: state.userSlice.authorizationStatus,
-    }));
+
+  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
+  const offersNearby = useSelector(({ dataSlice }) => dataSlice.offersNearby);
+  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
+  const reviews = useSelector(({ dataSlice }) => dataSlice.reviews);
+  const authorizationStatus = useSelector(
+    ({ userSlice }) => userSlice.authorizationStatus,
+  );
 
   const dispatch = useDispatch();
 

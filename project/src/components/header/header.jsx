@@ -21,8 +21,7 @@ function Header() {
               className="header__logo-link"
               to={AppRoute.MAIN}
               isActive={(match, { pathname }) =>
-                match && pathname === AppRoute.MAIN
-              }
+                match && pathname === AppRoute.MAIN}
               activeClassName="header__logo-link--active"
               activeStyle={{
                 cursor: 'default',
