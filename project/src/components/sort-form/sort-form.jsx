@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import SortList from '../sort-list/sort-list';
 
@@ -43,8 +42,4 @@ SortForm.propTypes = {
   activeSort: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ activeSort }) => ({
-  activeSort,
-});
-
-export default connect(mapStateToProps)(SortForm);
+export default memo(SortForm);

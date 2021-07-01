@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import RatingList from '../rating-list/rating-list';
 
-import { fetchReviewList, sendReview } from '../../store/api-actions';
-import { connect } from 'react-redux';
+import { sendReview } from '../../store/slices/user-slice';
 
 const MIN_SYMBOL_COUNT = 50;
 
-function ReviewForm({ submit, id, loadReviewList }) {
+function ReviewForm({ id }) {
+  const dispatch = useDispatch();
+
   const [review, setReview] = useState({
     rating: '',
     review: '',
@@ -17,7 +19,7 @@ function ReviewForm({ submit, id, loadReviewList }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    submit({ comment: review.review, rating: review.rating, id });
+    dispatch(sendReview({ comment: review.review, rating: review.rating, id }));
 
     setReview((state) => ({
       ...state,
@@ -70,14 +72,7 @@ function ReviewForm({ submit, id, loadReviewList }) {
 }
 
 ReviewForm.propTypes = {
-  submit: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  loadReviewList: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  submit: sendReview,
-  loadReviewList: fetchReviewList,
-};
-
-export default connect(null, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

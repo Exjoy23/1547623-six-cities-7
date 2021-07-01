@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../header/header';
 import LocationList from '../../location-list/location-list';
@@ -8,16 +7,22 @@ import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 
-import { fetchOfferList } from '../../../store/api-actions';
+import { loadOffers } from '../../../store/slices/data-slice';
 
 import { Locations } from '../../../const';
 
-import offersProp from '../../app/offers.prop';
+function MainPage() {
+  const { offers, city, isDataLoaded } = useSelector((state) => ({
+    offers: state.dataSlice.offers,
+    city: state.uiSlice.city,
+    isDataLoaded: state.dataSlice.isDataLoaded,
+  }));
 
-function MainPage({ offers, city, activeSort, loadOffers, isDataLoaded }) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadOffers();
-  }, [loadOffers]);
+    dispatch(loadOffers());
+  }, [dispatch]);
 
   const sortedOffers = offers.filter((item) => item.city.name === city);
 
@@ -41,11 +46,7 @@ function MainPage({ offers, city, activeSort, loadOffers, isDataLoaded }) {
         <div className="cities">
           <LoadWrapper isLoad={isDataLoaded}>
             {(sortedOffers.length && (
-              <MainPageWrapper
-                offers={sortedOffers}
-                city={city}
-                activeSort={activeSort}
-              />
+              <MainPageWrapper offers={sortedOffers} city={city} />
             )) || <EmptyPageWrapper />}
           </LoadWrapper>
         </div>
@@ -54,23 +55,4 @@ function MainPage({ offers, city, activeSort, loadOffers, isDataLoaded }) {
   );
 }
 
-MainPage.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
-  city: PropTypes.string.isRequired,
-  activeSort: PropTypes.string.isRequired,
-  loadOffers: PropTypes.func.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ offers, city, activeSort, isDataLoaded }) => ({
-  offers,
-  city,
-  activeSort,
-  isDataLoaded,
-});
-
-const mapDispatchToProps = {
-  loadOffers: fetchOfferList,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Map from '../map/map';
@@ -10,7 +11,9 @@ import { sortOffers } from '../../utils';
 
 import offersProp from '../app/offers.prop';
 
-function MainPageWrapper({ offers, city, activeSort }) {
+function MainPageWrapper({ offers, city }) {
+  const activeSort = useSelector(({ uiSlice }) => uiSlice.activeSort);
+
   const sortedOffers = sortOffers(activeSort, offers);
 
   return (
@@ -20,7 +23,7 @@ function MainPageWrapper({ offers, city, activeSort }) {
         <b className="places__found">
           {offers.length} places to stay in {city}
         </b>
-        <SortForm sorts={SORTS} />
+        <SortForm sorts={SORTS} activeSort={activeSort} />
         <CardList offers={sortedOffers} />
       </section>
       <div className="cities__right-section">
@@ -35,7 +38,6 @@ function MainPageWrapper({ offers, city, activeSort }) {
 MainPageWrapper.propTypes = {
   offers: PropTypes.arrayOf(offersProp).isRequired,
   city: PropTypes.string.isRequired,
-  activeSort: PropTypes.string.isRequired,
 };
 
 export default MainPageWrapper;

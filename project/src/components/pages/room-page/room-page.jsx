@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { getRatingInPercent } from '../../../utils';
 import { NEARBY_TYPE, AuthorizationStatus } from '../../../const';
+
 import {
-  fetchReviewList,
-  fetchOfferNearbyList,
-  fetchOffer
-} from '../../../store/api-actions';
+  loadOffer,
+  loadOffersNearby,
+  loadReviews,
+} from '../../../store/slices/data-slice';
+import { changeActiveCard } from '../../../store/slices/ui-slice';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -20,21 +22,18 @@ import CardList from '../../card-list/card-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 
-import offersProp from '../../app/offers.prop';
-import reviewsProp from '../../app/reviews.prop';
-import { connect } from 'react-redux';
-
-function RoomPage({
-  offers = [],
-  offersNearby = [],
-  reviews = [],
-  loadReviewList,
-  loadOffer,
-  loadOfferNearbyList,
-  authorizationStatus,
-  isDataLoaded,
-}) {
+function RoomPage() {
   const location = useLocation();
+  const { offers, isDataLoaded, offersNearby, reviews, authorizationStatus } =
+    useSelector((state) => ({
+      isDataLoaded: state.dataSlice.isDataLoaded,
+      offers: state.dataSlice.offers,
+      offersNearby: state.dataSlice.offersNearby,
+      reviews: state.dataSlice.reviews,
+      authorizationStatus: state.userSlice.authorizationStatus,
+    }));
+
+  const dispatch = useDispatch();
 
   const roomId = +location.pathname.replace(/\D+/g, '');
 
@@ -56,10 +55,11 @@ function RoomPage({
   const cardRating = getRatingInPercent(rating);
 
   useEffect(() => {
-    loadOffer(roomId);
-    loadReviewList(roomId);
-    loadOfferNearbyList(roomId);
-  }, [roomId, loadOffer, loadReviewList, loadOfferNearbyList]);
+    dispatch(changeActiveCard(roomId));
+    dispatch(loadOffer(roomId));
+    dispatch(loadReviews(roomId));
+    dispatch(loadOffersNearby(roomId));
+  }, [roomId, dispatch]);
 
   return (
     <LoadWrapper isLoad={isDataLoaded}>
@@ -163,7 +163,10 @@ function RoomPage({
                 </div>
               </div>
               <section className="property__map map">
-                <Map city={offers[0].city} offers={offers} />
+                <Map
+                  city={offers[0].city}
+                  offers={[...offers, ...offersNearby]}
+                />
               </section>
             </section>
             <div className="container">
@@ -181,35 +184,4 @@ function RoomPage({
   );
 }
 
-RoomPage.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
-  offersNearby: PropTypes.arrayOf(offersProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
-  loadReviewList: PropTypes.func.isRequired,
-  loadOffer: PropTypes.func.isRequired,
-  loadOfferNearbyList: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({
-  offers,
-  offersNearby,
-  reviews,
-  authorizationStatus,
-  isDataLoaded,
-}) => ({
-  offers,
-  offersNearby,
-  reviews,
-  authorizationStatus,
-  isDataLoaded,
-});
-
-const mapDispatchToProps = {
-  loadReviewList: fetchReviewList,
-  loadOfferNearbyList: fetchOfferNearbyList,
-  loadOffer: fetchOffer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);
+export default RoomPage;
