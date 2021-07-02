@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { memo } from 'react';
 import { generatePath, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { AppRoute, CardType, MAIN_TYPE } from '../../const';
 import { getRatingInPercent } from '../../utils';
-import { ActionCreator } from '../../store/action';
+
+import { changeActiveCard } from '../../store/slices/ui-slice';
 
 import offersProp from '../app/offers.prop';
+import { useDispatch } from 'react-redux';
 
 function CardItem({
   offer: {
@@ -20,20 +21,19 @@ function CardItem({
     type,
     previewImage,
   },
-  hoverCard,
   itemType = MAIN_TYPE,
 }) {
-  useEffect(() => () => {
-    hoverCard(null);
-  });
+  const dispatch = useDispatch();
 
   const cardRating = getRatingInPercent(rating);
 
   return (
     <article
       className={CardType[itemType].PLACE_CARD}
-      onMouseEnter={() => itemType === MAIN_TYPE && hoverCard(id)}
-      onMouseLeave={() => itemType === MAIN_TYPE && hoverCard(null)}
+      onMouseEnter={() =>
+        itemType === MAIN_TYPE && dispatch(changeActiveCard(id))}
+      onMouseLeave={() =>
+        itemType === MAIN_TYPE && dispatch(changeActiveCard(null))}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -93,12 +93,7 @@ function CardItem({
 
 CardItem.propTypes = {
   offer: offersProp,
-  hoverCard: PropTypes.func.isRequired,
   itemType: PropTypes.string,
 };
 
-const mapDispatchToProps = {
-  hoverCard: ActionCreator.hoverCard,
-};
-
-export default connect(null, mapDispatchToProps)(CardItem);
+export default memo(CardItem);

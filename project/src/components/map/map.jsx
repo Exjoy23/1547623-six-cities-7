@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import useMap from '../../hooks/useMap';
 
@@ -23,7 +23,9 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-function Map({ city, offers, activeCard }) {
+function Map({ city, offers }) {
+  const activeCard = useSelector(({ uiSlice }) => uiSlice.activeCard);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -72,9 +74,6 @@ Map.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  activeCard: PropTypes.number,
 };
 
-const mapStateToProps = ({ activeCard }) => ({ activeCard });
-
-export default connect(mapStateToProps)(Map);
+export default Map;

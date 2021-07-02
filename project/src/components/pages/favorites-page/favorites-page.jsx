@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
 import EmptyFavoritesWrapper from '../../empty-favorites-wrapper/empty-favorites-wrapper';
 
-import offersProp from '../../app/offers.prop';
+function FavoritesPage() {
+  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
 
-function FavoritesPage({ offers }) {
   const favoritesOffers = offers.filter((item) => item.isFavorite);
   const uniqueCities = new Set();
 
@@ -54,12 +53,4 @@ function FavoritesPage({ offers }) {
   );
 }
 
-FavoritesPage.propTypes = {
-  offers: PropTypes.arrayOf(offersProp).isRequired,
-};
-
-const mapStateToProps = ({ offers }) => ({
-  offers,
-});
-
-export default connect(mapStateToProps)(FavoritesPage);
+export default FavoritesPage;

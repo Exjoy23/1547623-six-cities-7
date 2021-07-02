@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { ActionCreator } from '../../store/action';
+import { changeSort } from '../../store/slices/ui-slice';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 
-function SortList({ sorts, activeSort, setIsActive, changeSort }) {
+function SortList({ sorts, activeSort, setIsActive }) {
+  const dispatch = useDispatch();
+
   const ulRef = useRef(null);
 
   useOutsideClick(ulRef, setIsActive);
@@ -21,7 +23,7 @@ function SortList({ sorts, activeSort, setIsActive, changeSort }) {
         <li
           key={item}
           onClick={() => {
-            changeSort(item);
+            dispatch(changeSort(item));
             setIsActive(false);
           }}
           className={
@@ -41,12 +43,7 @@ function SortList({ sorts, activeSort, setIsActive, changeSort }) {
 SortList.propTypes = {
   sorts: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   activeSort: PropTypes.string.isRequired,
-  changeSort: PropTypes.func.isRequired,
   setIsActive: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  changeSort: ActionCreator.changeSort,
-};
-
-export default connect(null, mapDispatchToProps)(SortList);
+export default SortList;

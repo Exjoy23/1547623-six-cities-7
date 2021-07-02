@@ -1,17 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
 
-import { logout } from '../../store/api-actions';
-import { ActionCreator } from '../../store/action';
+import { logout } from '../../store/slices/user-slice';
 
-function UserAuth({ email, avatarUrl, goOut, loadUserInfo }) {
-  const handleClick = async () => {
-    await goOut();
-    loadUserInfo({});
+function UserAuth() {
+  const dispatch = useDispatch();
+
+  const { email, avatarUrl } = useSelector(({ userSlice }) => ({
+    email: userSlice.user.email,
+    avatarUrl: userSlice.user.avatarUrl,
+  }));
+
+  const handleClick = () => {
+    dispatch(logout());
   };
 
   return (
@@ -44,21 +48,4 @@ function UserAuth({ email, avatarUrl, goOut, loadUserInfo }) {
   );
 }
 
-UserAuth.propTypes = {
-  email: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  goOut: PropTypes.func.isRequired,
-  loadUserInfo: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = ({ user: { email, avatarUrl } }) => ({
-  email,
-  avatarUrl,
-});
-
-const mapDispatchToProps = {
-  goOut: logout,
-  loadUserInfo: ActionCreator.loadUserInfo,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserAuth);
+export default UserAuth;
