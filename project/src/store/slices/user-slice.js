@@ -8,6 +8,7 @@ const SLICE_NAME = 'user';
 const TOKEN = 'token';
 
 export const ActionType = {
+  CHECK_AUTH: 'user/checkAuth',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
   SEND_REVIEW: 'user/sendReview',
@@ -16,13 +17,17 @@ export const ActionType = {
 
 const initialState = {
   user: {},
-  reviews: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
-const redirectToRoute = (route) => ({
+export const redirectToRoute = (route) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: route,
+});
+
+export const checkAuth = createAsyncThunk(ActionType.CHECK_AUTH, async () => {
+  const response = await api.get(APIRoute.LOGIN);
+  return response.data;
 });
 
 export const login = createAsyncThunk(
@@ -54,6 +59,13 @@ const userSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   extraReducers: {
+    [checkAuth.fulfilled]: (state, { payload }) => {
+      state.user = adaptUserInfo(payload);
+      state.authorizationStatus = AuthorizationStatus.AUTH;
+    },
+    [checkAuth.rejected]: (state) => {
+      state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+    },
     [login.fulfilled]: (state, { payload }) => {
       localStorage.setItem(TOKEN, payload.token);
       state.user = adaptUserInfo(payload);

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Locations } from '../../../const';
+import { AppRoute, Locations } from '../../../const';
 
 import { login } from '../../../store/slices/user-slice';
 import { changeCity } from '../../../store/slices/ui-slice';
@@ -78,7 +78,7 @@ function SignInPage() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
+              <Link className="locations__item-link" to={AppRoute.MAIN}>
                 <span onClick={() => dispatch(changeCity(Locations.AMSTERDAM))}>
                   Amsterdam
                 </span>

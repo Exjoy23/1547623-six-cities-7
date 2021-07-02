@@ -44,6 +44,25 @@ export const CardListType = {
   },
 };
 
+export const FavoritesButtonType = {
+  MAIN: {
+    BUTTON_CLASS: 'place-card__bookmark-button button',
+    IMAGE: {
+      CLASS: 'place-card__bookmark-icon',
+      WIDTH: '18',
+      HEIGHT: '19',
+    },
+  },
+  FAVORITES: {
+    BUTTON_CLASS: 'property__bookmark-button button',
+    IMAGE: {
+      CLASS: 'property__bookmark-icon',
+      WIDTH: '31',
+      HEIGHT: '33',
+    },
+  },
+};
+
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
@@ -87,4 +106,5 @@ export const APIRoute = {
   REVIEWS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITES: '/favorite',
 };

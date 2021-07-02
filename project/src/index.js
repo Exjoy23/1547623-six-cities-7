@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import dataSlice from './store/slices/data-slice';
 import uiSlice from './store/slices/ui-slice';
-import userSlice from './store/slices/user-slice';
+import userSlice, { checkAuth } from './store/slices/user-slice';
 
 import { redirect } from './store/middlewares/redirect';
 import { createAPI } from './services/api';
@@ -22,6 +22,8 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(redirect),
 });
+
+store.dispatch(checkAuth());
 
 ReactDOM.render(
   <React.StrictMode>

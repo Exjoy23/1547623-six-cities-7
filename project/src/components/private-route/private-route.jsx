@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
+import LoadWrapper from '../load-wrapper/load-wrapper';
 
 function PrivateRoute({ render, path, exact }) {
   const authorizationStatus = useSelector(
@@ -11,16 +12,18 @@ function PrivateRoute({ render, path, exact }) {
   );
 
   return (
-    <Route
-      path={path}
-      exact={exact}
-      render={(routeProps) =>
-        authorizationStatus === AuthorizationStatus.AUTH ? (
-          render(routeProps)
-        ) : (
-          <Redirect to={AppRoute.SIGN_IN} />
-        )}
-    />
+    <LoadWrapper isLoad={authorizationStatus !== AuthorizationStatus.UNKNOWN}>
+      <Route
+        path={path}
+        exact={exact}
+        render={(routeProps) =>
+          authorizationStatus === AuthorizationStatus.AUTH ? (
+            render(routeProps)
+          ) : (
+            <Redirect to={AppRoute.SIGN_IN} />
+          )}
+      />
+    </LoadWrapper>
   );
 }
 

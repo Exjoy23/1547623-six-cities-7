@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Map from '../map/map';
@@ -9,12 +9,20 @@ import SortForm from '../sort-form/sort-form';
 import { SORTS } from '../../const';
 import { sortOffers } from '../../utils';
 
+import { changeActiveCard } from '../../store/slices/ui-slice';
+
 import offersProp from '../app/offers.prop';
 
 function MainPageWrapper({ offers, city }) {
+  const dispatch = useDispatch();
+
   const activeSort = useSelector(({ uiSlice }) => uiSlice.activeSort);
 
   const sortedOffers = sortOffers(activeSort, offers);
+
+  const onMouseAction = (id) => {
+    dispatch(changeActiveCard(id));
+  };
 
   return (
     <div className="cities__places-container container">
@@ -24,7 +32,11 @@ function MainPageWrapper({ offers, city }) {
           {offers.length} places to stay in {city}
         </b>
         <SortForm sorts={SORTS} activeSort={activeSort} />
-        <CardList offers={sortedOffers} />
+        <CardList
+          offers={sortedOffers}
+          onMouseEnter={onMouseAction}
+          onMouseLeave={onMouseAction}
+        />
       </section>
       <div className="cities__right-section">
         <section className="cities__map map">

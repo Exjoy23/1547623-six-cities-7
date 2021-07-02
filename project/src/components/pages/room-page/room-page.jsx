@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { getRatingInPercent } from '../../../utils';
-import { NEARBY_TYPE, AuthorizationStatus } from '../../../const';
+import {
+  NEARBY_TYPE,
+  AuthorizationStatus,
+  FAVORITES_TYPE
+} from '../../../const';
 
 import {
   loadOffer,
@@ -21,10 +25,11 @@ import GoodsList from '../../goods-list/goods-list';
 import CardList from '../../card-list/card-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
+import FavoritesButton from '../../favorites-button/favorites-button';
 
 function RoomPage() {
-  const location = useLocation();
-
+  const dispatch = useDispatch();
+  const params = useParams();
   const offers = useSelector(({ dataSlice }) => dataSlice.offers);
   const offersNearby = useSelector(({ dataSlice }) => dataSlice.offersNearby);
   const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
@@ -33,9 +38,7 @@ function RoomPage() {
     ({ userSlice }) => userSlice.authorizationStatus,
   );
 
-  const dispatch = useDispatch();
-
-  const roomId = +location.pathname.replace(/\D+/g, '');
+  const roomId = +params.id;
 
   const {
     images,
@@ -51,6 +54,8 @@ function RoomPage() {
     goods,
     host,
   } = offers.length && offers[0];
+
+  // const [isFavorites, setIsFavorites] = useFavorites(roomId, isFavorite);
 
   const cardRating = getRatingInPercent(rating);
 
@@ -81,23 +86,11 @@ function RoomPage() {
                   )}
                   <div className="property__name-wrapper">
                     <h1 className="property__name">{title}</h1>
-                    <button
-                      className="property__bookmark-button button"
-                      type="button"
-                    >
-                      <svg
-                        className="property__bookmark-icon"
-                        width="31"
-                        height="33"
-                        style={{
-                          fill: `${isFavorite && '#4481c3'}`,
-                          stroke: `${isFavorite ? '#4481c3' : '#979797'}`,
-                        }}
-                      >
-                        <use xlinkHref="#icon-bookmark"></use>
-                      </svg>
-                      <span className="visually-hidden">To bookmarks</span>
-                    </button>
+                    <FavoritesButton
+                      id={roomId}
+                      isFavorite={isFavorite}
+                      buttonType={FAVORITES_TYPE}
+                    />
                   </div>
                   <div className="property__rating rating">
                     <div className="property__stars rating__stars">
