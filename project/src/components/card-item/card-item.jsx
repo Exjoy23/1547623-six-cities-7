@@ -1,14 +1,13 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { AppRoute, CardType, MAIN_TYPE } from '../../const';
 import { getRatingInPercent } from '../../utils';
 
-import { changeActiveCard } from '../../store/slices/ui-slice';
+import FavoritesButton from '../favorites-button/favorites-button';
 
 import offersProp from '../app/offers.prop';
-import { useDispatch } from 'react-redux';
 
 function CardItem({
   offer: {
@@ -22,18 +21,16 @@ function CardItem({
     previewImage,
   },
   itemType = MAIN_TYPE,
+  onMouseEnter,
+  onMouseLeave,
 }) {
-  const dispatch = useDispatch();
-
   const cardRating = getRatingInPercent(rating);
 
   return (
     <article
       className={CardType[itemType].PLACE_CARD}
-      onMouseEnter={() =>
-        itemType === MAIN_TYPE && dispatch(changeActiveCard(id))}
-      onMouseLeave={() =>
-        itemType === MAIN_TYPE && dispatch(changeActiveCard(null))}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -57,20 +54,7 @@ function CardItem({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-              style={{
-                fill: `${isFavorite && '#4481c3'}`,
-                stroke: `${isFavorite ? '#4481c3' : '#979797'}`,
-              }}
-            >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoritesButton id={id} isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -94,6 +78,8 @@ function CardItem({
 CardItem.propTypes = {
   offer: offersProp,
   itemType: PropTypes.string,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
-export default memo(CardItem);
+export default CardItem;
