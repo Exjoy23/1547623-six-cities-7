@@ -9,12 +9,18 @@ import {
   FAVORITES_TYPE
 } from '../../../const';
 
+import { fetchOffer } from '../../../store/api-actions';
+import { fetchOffersNearby } from '../../../store/api-actions';
+import { fetchReviews } from '../../../store/api-actions';
+import { changeActiveCard } from '../../../store/actions';
+
 import {
-  loadOffer,
-  loadOffersNearby,
-  loadReviews
-} from '../../../store/slices/data-slice';
-import { changeActiveCard } from '../../../store/slices/ui-slice';
+  getIsDataLoaded,
+  getOffers,
+  getOffersNearby,
+  getReviews
+} from '../../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../../store/user-data/selectors';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -30,13 +36,11 @@ import FavoritesButton from '../../favorites-button/favorites-button';
 function RoomPage() {
   const dispatch = useDispatch();
   const params = useParams();
-  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
-  const offersNearby = useSelector(({ dataSlice }) => dataSlice.offersNearby);
-  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
-  const reviews = useSelector(({ dataSlice }) => dataSlice.reviews);
-  const authorizationStatus = useSelector(
-    ({ userSlice }) => userSlice.authorizationStatus,
-  );
+  const offers = useSelector(getOffers);
+  const offersNearby = useSelector(getOffersNearby);
+  const isDataLoaded = useSelector(getIsDataLoaded);
+  const reviews = useSelector(getReviews);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const roomId = +params.id;
 
@@ -55,15 +59,13 @@ function RoomPage() {
     host,
   } = offers.length && offers[0];
 
-  // const [isFavorites, setIsFavorites] = useFavorites(roomId, isFavorite);
-
   const cardRating = getRatingInPercent(rating);
 
   useEffect(() => {
     dispatch(changeActiveCard(roomId));
-    dispatch(loadOffer(roomId));
-    dispatch(loadReviews(roomId));
-    dispatch(loadOffersNearby(roomId));
+    dispatch(fetchOffer(roomId));
+    dispatch(fetchReviews(roomId));
+    dispatch(fetchOffersNearby(roomId));
   }, [roomId, dispatch]);
 
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setFavorites } from '../store/slices/ui-slice';
+import { setFavorites } from '../store/api-actions';
 
 export function useFavorites(id, status) {
   const dispatch = useDispatch();

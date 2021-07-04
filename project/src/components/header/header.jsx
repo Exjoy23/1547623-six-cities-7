@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import UserAuth from '../user-auth/user-auth';
 import UserNoAuth from '../user-no-auth/user-no-auth';
 
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
+
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 function Header() {
-  const authorizationStatus = useSelector(
-    ({ userSlice }) => userSlice.authorizationStatus,
-  );
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <header className="header">

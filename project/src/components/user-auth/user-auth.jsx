@@ -4,15 +4,14 @@ import { Link, NavLink } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
 
-import { logout } from '../../store/slices/user-slice';
+import { logout } from '../../store/api-actions';
+
+import { getUser } from '../../store/user-data/selectors';
 
 function UserAuth() {
   const dispatch = useDispatch();
 
-  const { email, avatarUrl } = useSelector(({ userSlice }) => ({
-    email: userSlice.user.email,
-    avatarUrl: userSlice.user.avatarUrl,
-  }));
+  const { avatarUrl, email } = useSelector(getUser);
 
   const handleClick = () => {
     dispatch(logout());

@@ -7,6 +7,8 @@ import useMap from '../../hooks/useMap';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 
+import { getActiveCard } from '../../store/app-ui/selectors';
+
 import offersProp from '../app/offers.prop';
 
 import 'leaflet/dist/leaflet.css';
@@ -24,7 +26,7 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map({ city, offers }) {
-  const activeCard = useSelector(({ uiSlice }) => uiSlice.activeCard);
+  const activeCard = useSelector(getActiveCard);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

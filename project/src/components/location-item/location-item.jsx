@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { AppRoute } from '../../const';
 
-import { changeCity } from '../../store/slices/ui-slice';
+import { changeActiveCity } from '../../store/actions';
+
+import { getActiveCity } from '../../store/app-ui/selectors';
 
 function LocationItem({ location }) {
-  const { city } = useSelector(({ uiSlice }) => ({
-    city: uiSlice.city,
-  }));
+  const city = useSelector(getActiveCity);
 
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ function LocationItem({ location }) {
         }
         to={AppRoute.MAIN}
         onClick={() => {
-          dispatch(changeCity(location));
+          dispatch(changeActiveCity(location));
         }}
         className={
           city === location

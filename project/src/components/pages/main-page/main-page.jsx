@@ -7,19 +7,22 @@ import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 
-import { loadOffers } from '../../../store/slices/data-slice';
+import { fetchOffers } from '../../../store/api-actions';
+
+import { getActiveCity } from '../../../store/app-ui/selectors';
+import { getOffers, getIsDataLoaded } from '../../../store/app-data/selectors';
 
 import { Locations } from '../../../const';
 
 function MainPage() {
-  const city = useSelector(({ uiSlice }) => uiSlice.city);
-  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
-  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
+  const city = useSelector(getActiveCity);
+  const offers = useSelector(getOffers);
+  const isDataLoaded = useSelector(getIsDataLoaded);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadOffers());
+    dispatch(fetchOffers());
   }, [dispatch]);
 
   const sortedOffers = offers.filter((item) => item.city.name === city);

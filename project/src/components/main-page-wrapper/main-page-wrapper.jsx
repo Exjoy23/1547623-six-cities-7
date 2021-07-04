@@ -9,14 +9,16 @@ import SortForm from '../sort-form/sort-form';
 import { SORTS } from '../../const';
 import { sortOffers } from '../../utils';
 
-import { changeActiveCard } from '../../store/slices/ui-slice';
+import { changeActiveCard } from '../../store/actions';
+
+import { getActiveSort } from '../../store/app-ui/selectors';
 
 import offersProp from '../app/offers.prop';
 
 function MainPageWrapper({ offers, city }) {
   const dispatch = useDispatch();
 
-  const activeSort = useSelector(({ uiSlice }) => uiSlice.activeSort);
+  const activeSort = useSelector(getActiveSort);
 
   const sortedOffers = sortOffers(activeSort, offers);
 

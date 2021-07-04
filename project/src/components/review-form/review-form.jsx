@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import RatingList from '../rating-list/rating-list';
 
-import { sendReview } from '../../store/slices/user-slice';
+import { sendReview } from '../../store/api-actions';
 
 const MIN_SYMBOL_COUNT = 50;
 
@@ -48,6 +48,7 @@ function ReviewForm({ id }) {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        maxLength="300"
         onChange={handleChange}
         value={review.review}
       />

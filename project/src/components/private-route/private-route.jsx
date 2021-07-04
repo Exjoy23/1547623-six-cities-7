@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import LoadWrapper from '../load-wrapper/load-wrapper';
 
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
+
 function PrivateRoute({ render, path, exact }) {
-  const authorizationStatus = useSelector(
-    ({ userSlice }) => userSlice.authorizationStatus,
-  );
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <LoadWrapper isLoad={authorizationStatus !== AuthorizationStatus.UNKNOWN}>

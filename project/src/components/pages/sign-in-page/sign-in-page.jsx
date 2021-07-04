@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { AppRoute, Locations } from '../../../const';
 
-import { login } from '../../../store/slices/user-slice';
-import { changeCity } from '../../../store/slices/ui-slice';
+import { login } from '../../../store/api-actions';
+import { changeActiveCity } from '../../../store/actions';
 
 import Header from '../../header/header';
 
@@ -79,7 +79,10 @@ function SignInPage() {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to={AppRoute.MAIN}>
-                <span onClick={() => dispatch(changeCity(Locations.AMSTERDAM))}>
+                <span
+                  onClick={() =>
+                    dispatch(changeActiveCity(Locations.AMSTERDAM))}
+                >
                   Amsterdam
                 </span>
               </Link>
