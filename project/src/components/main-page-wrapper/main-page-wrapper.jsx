@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -54,4 +54,4 @@ MainPageWrapper.propTypes = {
   city: PropTypes.string.isRequired,
 };
 
-export default MainPageWrapper;
+export default memo(MainPageWrapper);

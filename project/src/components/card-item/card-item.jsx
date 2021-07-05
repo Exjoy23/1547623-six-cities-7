@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -82,4 +82,4 @@ CardItem.propTypes = {
   onMouseLeave: PropTypes.func,
 };
 
-export default CardItem;
+export default memo(CardItem);

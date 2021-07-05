@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
@@ -12,6 +13,8 @@ import {
   getFavorites,
   getIsDataLoaded
 } from '../../../store/app-data/selectors';
+
+import { AppRoute } from '../../../const';
 
 function FavoritesPage() {
   const dispatch = useDispatch();
@@ -54,7 +57,7 @@ function FavoritesPage() {
         </main>
       </LoadWrapper>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.MAIN}>
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -62,7 +65,7 @@ function FavoritesPage() {
             width="64"
             height="33"
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );

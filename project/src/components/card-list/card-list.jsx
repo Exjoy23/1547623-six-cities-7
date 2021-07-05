@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import CardItem from '../card-item/card-item';
@@ -35,4 +35,4 @@ CardList.propTypes = {
   onMouseLeave: PropTypes.func,
 };
 
-export default CardList;
+export default memo(CardList);

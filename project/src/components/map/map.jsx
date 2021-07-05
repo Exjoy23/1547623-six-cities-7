@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import { useSelector } from 'react-redux';
@@ -78,4 +78,4 @@ Map.propTypes = {
   }).isRequired,
 };
 
-export default Map;
+export default memo(Map);

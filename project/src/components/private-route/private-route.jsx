@@ -8,7 +8,13 @@ import LoadWrapper from '../load-wrapper/load-wrapper';
 
 import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
-function PrivateRoute({ render, path, exact }) {
+function PrivateRoute({
+  render,
+  path,
+  exact,
+  status = AuthorizationStatus.AUTH,
+  redirect = AppRoute.SIGN_IN,
+}) {
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
@@ -17,11 +23,12 @@ function PrivateRoute({ render, path, exact }) {
         path={path}
         exact={exact}
         render={(routeProps) =>
-          authorizationStatus === AuthorizationStatus.AUTH ? (
+          authorizationStatus === status ? (
             render(routeProps)
           ) : (
-            <Redirect to={AppRoute.SIGN_IN} />
-          )}
+            <Redirect to={redirect} />
+          )
+        }
       />
     </LoadWrapper>
   );
@@ -31,6 +38,8 @@ PrivateRoute.propTypes = {
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
+  status: PropTypes.string,
+  redirect: PropTypes.string,
 };
 
 export default PrivateRoute;

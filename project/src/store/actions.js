@@ -10,6 +10,9 @@ export const ActionType = {
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOAD_USER_INFO: 'user/loadUserInfo',
   LOGOUT: 'user/logout',
+  SET_IS_REVIEW_SENDING: 'user/setIsReviewSending',
+  SET_IS_REVIEW_SUCCESS: 'user/setIsReviewSuccess',
+  SET_IS_REVIEW_ERROR: 'user/setIsReviewError',
   SET_FAVORITES: 'ui/setFavorites',
   CHANGE_CITY: 'ui/changeCity',
   CHANGE_SORT: 'ui/changeSort',
@@ -65,6 +68,27 @@ export const loadUserInfo = createAction(
 );
 
 export const logout = createAction(ActionType.LOGOUT);
+
+export const setIsReviewSending = createAction(
+  ActionType.SET_IS_REVIEW_SENDING,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setIsReviewSuccess = createAction(
+  ActionType.SET_IS_REVIEW_SUCCESS,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setIsReviewError = createAction(
+  ActionType.SET_IS_REVIEW_ERROR,
+  (payload) => ({
+    payload,
+  }),
+);
 
 export const changeActiveCity = createAction(
   ActionType.CHANGE_CITY,

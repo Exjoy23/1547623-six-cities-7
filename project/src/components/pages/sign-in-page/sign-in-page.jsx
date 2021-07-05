@@ -64,6 +64,7 @@ function SignInPage() {
                   name="password"
                   placeholder="Password"
                   required
+                  minLength="8"
                   value={password}
                   onChange={handleChange}
                 />

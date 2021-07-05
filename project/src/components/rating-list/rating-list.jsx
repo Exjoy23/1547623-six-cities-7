@@ -5,11 +5,11 @@ import RatingItem from '../rating-item/rating-item';
 
 const RATINGS = [5, 4, 3, 2, 1];
 
-function RatingList({ handleChange }) {
+function RatingList({ handleChange, checked }) {
   return (
     <div className="reviews__rating-form form__rating" onChange={handleChange}>
       {RATINGS.map((item) => (
-        <RatingItem key={item} rating={item} />
+        <RatingItem key={item} rating={item} checked={checked} />
       ))}
     </div>
   );
@@ -17,6 +17,7 @@ function RatingList({ handleChange }) {
 
 RatingList.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  checked: PropTypes.number.isRequired,
 };
 
 export default RatingList;
