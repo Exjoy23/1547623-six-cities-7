@@ -16,7 +16,7 @@ import { changeActiveCard } from '../../../store/actions';
 
 import {
   getIsDataLoaded,
-  getOffers,
+  getOffer,
   getOffersNearby,
   getReviews
 } from '../../../store/app-data/selectors';
@@ -36,11 +36,16 @@ import FavoritesButton from '../../favorites-button/favorites-button';
 function RoomPage() {
   const dispatch = useDispatch();
   const params = useParams();
-  const offers = useSelector(getOffers);
+  const offer = useSelector(getOffer);
   const offersNearby = useSelector(getOffersNearby);
   const isDataLoaded = useSelector(getIsDataLoaded);
   const reviews = useSelector(getReviews);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const sortedReviews = reviews
+    .slice()
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 10);
 
   const roomId = +params.id;
 
@@ -57,7 +62,7 @@ function RoomPage() {
     price,
     goods,
     host,
-  } = offers.length && offers[0];
+  } = offer;
 
   const cardRating = getRatingInPercent(rating);
 
@@ -70,7 +75,7 @@ function RoomPage() {
 
   return (
     <LoadWrapper isLoad={isDataLoaded}>
-      {(offers.length && (
+      {(Object.keys(offer).length && (
         <div className="page">
           <Header />
 
@@ -150,7 +155,7 @@ function RoomPage() {
                       Reviews &middot;{' '}
                       <span className="reviews__amount">{reviews.length}</span>
                     </h2>
-                    <ReviewList reviews={reviews} />
+                    <ReviewList reviews={sortedReviews} />
                     {authorizationStatus === AuthorizationStatus.AUTH && (
                       <ReviewForm id={roomId} />
                     )}
@@ -158,10 +163,7 @@ function RoomPage() {
                 </div>
               </div>
               <section className="property__map map">
-                <Map
-                  city={offers[0].city}
-                  offers={[...offers, ...offersNearby]}
-                />
+                <Map city={offer.city} offers={[offer, ...offersNearby]} />
               </section>
             </section>
             <div className="container">

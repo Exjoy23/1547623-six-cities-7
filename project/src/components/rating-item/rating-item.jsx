@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RatingItem({ rating, checked }) {
+function RatingItem({ rating, checked, isDisabled }) {
   return (
     <>
       <input
@@ -12,6 +12,7 @@ function RatingItem({ rating, checked }) {
         type="radio"
         checked={rating === checked}
         readOnly
+        disabled={isDisabled}
       />
       <label
         htmlFor={`${rating}-stars`}
@@ -29,6 +30,7 @@ function RatingItem({ rating, checked }) {
 RatingItem.propTypes = {
   rating: PropTypes.number.isRequired,
   checked: PropTypes.number.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
 };
 
 export default RatingItem;

@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 
 import rootReducer from './store/root-reducer';
 import { requireAuthorization } from './store/actions';
-import { checkAuth } from './store/api-actions';
+import { checkAuth, fetchOffers } from './store/api-actions';
 
 import { redirect } from './store/middlewares/redirect';
 import { createAPI } from './services/api';
@@ -31,6 +31,7 @@ const store = configureStore({
 });
 
 store.dispatch(checkAuth());
+store.dispatch(fetchOffers());
 
 ReactDOM.render(
   <React.StrictMode>

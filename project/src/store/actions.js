@@ -14,8 +14,9 @@ export const ActionType = {
   SET_IS_REVIEW_SUCCESS: 'user/setIsReviewSuccess',
   SET_IS_REVIEW_ERROR: 'user/setIsReviewError',
   SET_FAVORITES: 'ui/setFavorites',
-  CHANGE_CITY: 'ui/changeCity',
-  CHANGE_SORT: 'ui/changeSort',
+  SET_FAVORITES_ITEM: 'ui/setFavoritesItem',
+  CHANGE_ACTIVE_CITY: 'ui/changeActiveCity',
+  CHANGE_ACTIVE_SORT: 'ui/changeActiveSort',
   CHANGE_ACTIVE_CARD: 'ui/changeActiveCard',
   REDIRECT_TO_ROUTE: 'ui/redirectToRoute',
 };
@@ -69,6 +70,13 @@ export const loadUserInfo = createAction(
 
 export const logout = createAction(ActionType.LOGOUT);
 
+export const setFavoritesItem = createAction(
+  ActionType.SET_FAVORITES_ITEM,
+  (payload) => ({
+    payload,
+  }),
+);
+
 export const setIsReviewSending = createAction(
   ActionType.SET_IS_REVIEW_SENDING,
   (payload) => ({
@@ -91,14 +99,14 @@ export const setIsReviewError = createAction(
 );
 
 export const changeActiveCity = createAction(
-  ActionType.CHANGE_CITY,
+  ActionType.CHANGE_ACTIVE_CITY,
   (payload) => ({
     payload,
   }),
 );
 
 export const changeActiveSort = createAction(
-  ActionType.CHANGE_SORT,
+  ActionType.CHANGE_ACTIVE_SORT,
   (payload) => ({
     payload,
   }),

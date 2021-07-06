@@ -27,8 +27,7 @@ function PrivateRoute({
             render(routeProps)
           ) : (
             <Redirect to={redirect} />
-          )
-        }
+          )}
       />
     </LoadWrapper>
   );

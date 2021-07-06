@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Header from '../../header/header';
 import LocationList from '../../location-list/location-list';
 import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
-
-import { fetchOffers } from '../../../store/api-actions';
 
 import { getActiveCity } from '../../../store/app-ui/selectors';
 import { getOffers, getIsDataLoaded } from '../../../store/app-data/selectors';
@@ -18,12 +16,6 @@ function MainPage() {
   const city = useSelector(getActiveCity);
   const offers = useSelector(getOffers);
   const isDataLoaded = useSelector(getIsDataLoaded);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOffers());
-  }, [dispatch]);
 
   const sortedOffers = offers.filter((item) => item.city.name === city);
 

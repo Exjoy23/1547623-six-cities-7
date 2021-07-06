@@ -10,7 +10,7 @@ import { sendReview } from '../../store/api-actions';
 import {
   getIsReviewError,
   getIsReviewSending,
-  getIsReviewSuccess,
+  getIsReviewSuccess
 } from '../../store/user-data/selectors';
 
 const MIN_SYMBOL_COUNT = 50;
