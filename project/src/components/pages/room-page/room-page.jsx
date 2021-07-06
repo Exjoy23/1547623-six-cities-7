@@ -6,7 +6,7 @@ import { getRatingInPercent } from '../../../utils';
 import {
   NEARBY_TYPE,
   AuthorizationStatus,
-  FAVORITES_TYPE
+  FAVORITES_TYPE,
 } from '../../../const';
 
 import { fetchOffer } from '../../../store/api-actions';
@@ -18,7 +18,7 @@ import {
   getIsDataLoaded,
   getOffer,
   getOffersNearby,
-  getReviews
+  getReviews,
 } from '../../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../../store/user-data/selectors';
 
