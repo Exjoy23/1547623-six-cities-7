@@ -108,3 +108,7 @@ export const APIRoute = {
   LOGOUT: '/logout',
   FAVORITES: '/favorite',
 };
+
+export const TOKEN = 'token';
+export const IS_FAVORITES = 1;
+export const IS_NOT_FAVORITES = 0;

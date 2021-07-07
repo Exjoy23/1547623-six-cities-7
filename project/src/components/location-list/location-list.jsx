@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import LocationItem from '../location-item/location-item';
@@ -17,4 +17,4 @@ LocationList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default LocationList;
+export default memo(LocationList);

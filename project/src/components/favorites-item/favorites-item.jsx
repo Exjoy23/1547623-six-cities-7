@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import CardItem from '../card-item/card-item';
 
-import { FAVORITES_TYPE } from '../../const';
+import { AppRoute, FAVORITES_TYPE } from '../../const';
+
+import { changeActiveCity } from '../../store/actions';
 
 import offersProp from '../app/offers.prop';
 
 function FavoritesItem({ favoritesOffers, favoritesCity }) {
+  const dispatch = useDispatch();
+
   const offers = favoritesOffers.filter(
     (item) => item.city.name === favoritesCity,
   );
@@ -16,9 +22,15 @@ function FavoritesItem({ favoritesOffers, favoritesCity }) {
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link
+            className="locations__item-link"
+            to={AppRoute.MAIN}
+            onClick={() => {
+              dispatch(changeActiveCity(favoritesCity));
+            }}
+          >
             <span>{favoritesCity}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">

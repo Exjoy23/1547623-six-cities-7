@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { changeSort } from '../../store/slices/ui-slice';
+import { changeActiveSort } from '../../store/actions';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 
@@ -23,7 +23,7 @@ function SortList({ sorts, activeSort, setIsActive }) {
         <li
           key={item}
           onClick={() => {
-            dispatch(changeSort(item));
+            dispatch(changeActiveSort(item));
             setIsActive(false);
           }}
           className={

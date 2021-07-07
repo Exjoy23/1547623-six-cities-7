@@ -1,10 +1,9 @@
 import { AuthorizationStatus, SortOptions } from './const';
 
-const MAX_RATING = 5;
-const MAX_PERCENT = 100;
+const RATING_STAR = 20;
 
 export const getRatingInPercent = (rating) =>
-  `${((rating / MAX_RATING) * MAX_PERCENT).toFixed()}%`;
+  `${Math.round(rating) * RATING_STAR}%`;
 
 export const sortOffers = (sort, offers) => {
   switch (sort) {

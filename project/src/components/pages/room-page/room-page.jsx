@@ -9,12 +9,18 @@ import {
   FAVORITES_TYPE
 } from '../../../const';
 
+import { fetchOffer } from '../../../store/api-actions';
+import { fetchOffersNearby } from '../../../store/api-actions';
+import { fetchReviews } from '../../../store/api-actions';
+import { changeActiveCard } from '../../../store/actions';
+
 import {
-  loadOffer,
-  loadOffersNearby,
-  loadReviews
-} from '../../../store/slices/data-slice';
-import { changeActiveCard } from '../../../store/slices/ui-slice';
+  getIsDataLoaded,
+  getOffer,
+  getOffersNearby,
+  getReviews
+} from '../../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../../store/user-data/selectors';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -30,13 +36,18 @@ import FavoritesButton from '../../favorites-button/favorites-button';
 function RoomPage() {
   const dispatch = useDispatch();
   const params = useParams();
-  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
-  const offersNearby = useSelector(({ dataSlice }) => dataSlice.offersNearby);
-  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
-  const reviews = useSelector(({ dataSlice }) => dataSlice.reviews);
-  const authorizationStatus = useSelector(
-    ({ userSlice }) => userSlice.authorizationStatus,
-  );
+  const offer = useSelector(getOffer);
+  const offersNearby = useSelector(getOffersNearby);
+  const isDataLoaded = useSelector(getIsDataLoaded);
+  const reviews = useSelector(getReviews);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const sortedReviews =
+    reviews &&
+    reviews
+      .slice()
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 10);
 
   const roomId = +params.id;
 
@@ -53,22 +64,20 @@ function RoomPage() {
     price,
     goods,
     host,
-  } = offers.length && offers[0];
-
-  // const [isFavorites, setIsFavorites] = useFavorites(roomId, isFavorite);
+  } = offer;
 
   const cardRating = getRatingInPercent(rating);
 
   useEffect(() => {
     dispatch(changeActiveCard(roomId));
-    dispatch(loadOffer(roomId));
-    dispatch(loadReviews(roomId));
-    dispatch(loadOffersNearby(roomId));
+    dispatch(fetchOffer(roomId));
+    dispatch(fetchReviews(roomId));
+    dispatch(fetchOffersNearby(roomId));
   }, [roomId, dispatch]);
 
   return (
     <LoadWrapper isLoad={isDataLoaded}>
-      {(offers.length && (
+      {(Object.keys(offer).length && (
         <div className="page">
           <Header />
 
@@ -146,9 +155,11 @@ function RoomPage() {
                   <section className="property__reviews reviews">
                     <h2 className="reviews__title">
                       Reviews &middot;{' '}
-                      <span className="reviews__amount">{reviews.length}</span>
+                      <span className="reviews__amount">
+                        {reviews && reviews.length}
+                      </span>
                     </h2>
-                    <ReviewList reviews={reviews} />
+                    <ReviewList reviews={sortedReviews} />
                     {authorizationStatus === AuthorizationStatus.AUTH && (
                       <ReviewForm id={roomId} />
                     )}
@@ -156,10 +167,7 @@ function RoomPage() {
                 </div>
               </div>
               <section className="property__map map">
-                <Map
-                  city={offers[0].city}
-                  offers={[...offers, ...offersNearby]}
-                />
+                <Map city={offer.city} offers={[offer, ...offersNearby]} />
               </section>
             </section>
             <div className="container">

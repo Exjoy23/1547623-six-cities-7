@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import useMap from '../../hooks/useMap';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+
+import { getActiveCard } from '../../store/app-ui/selectors';
 
 import offersProp from '../app/offers.prop';
 
@@ -24,7 +26,7 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map({ city, offers }) {
-  const activeCard = useSelector(({ uiSlice }) => uiSlice.activeCard);
+  const activeCard = useSelector(getActiveCard);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -76,4 +78,4 @@ Map.propTypes = {
   }).isRequired,
 };
 
-export default Map;
+export default memo(Map);

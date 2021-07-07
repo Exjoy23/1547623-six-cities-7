@@ -13,7 +13,7 @@ function useOutsideClick(ref, func) {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, func]);
 }
 
 export default useOutsideClick;

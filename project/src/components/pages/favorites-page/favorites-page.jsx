@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
 import EmptyFavoritesWrapper from '../../empty-favorites-wrapper/empty-favorites-wrapper';
 
-import { loadFavorites } from '../../../store/slices/data-slice';
+import { fetchFavorites } from '../../../store/api-actions';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
+
+import {
+  getFavorites,
+  getIsDataLoaded
+} from '../../../store/app-data/selectors';
+
+import { AppRoute } from '../../../const';
 
 function FavoritesPage() {
   const dispatch = useDispatch();
-  const favoritesOffers = useSelector(({ dataSlice }) => dataSlice.favorites);
-  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
+  const favoritesOffers = useSelector(getFavorites);
+  const isDataLoaded = useSelector(getIsDataLoaded);
 
   const uniqueCities = new Set();
 
@@ -20,7 +28,7 @@ function FavoritesPage() {
   const favoritesCities = [...uniqueCities.values()];
 
   useEffect(() => {
-    dispatch(loadFavorites());
+    dispatch(fetchFavorites());
   }, [dispatch]);
 
   return (
@@ -49,7 +57,7 @@ function FavoritesPage() {
         </main>
       </LoadWrapper>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.MAIN}>
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -57,7 +65,7 @@ function FavoritesPage() {
             width="64"
             height="33"
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );

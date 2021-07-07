@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Header from '../../header/header';
 import LocationList from '../../location-list/location-list';
@@ -7,22 +7,18 @@ import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 
-import { loadOffers } from '../../../store/slices/data-slice';
+import { getActiveCity } from '../../../store/app-ui/selectors';
+import { getOffers, getIsDataLoaded } from '../../../store/app-data/selectors';
 
 import { Locations } from '../../../const';
 
 function MainPage() {
-  const city = useSelector(({ uiSlice }) => uiSlice.city);
-  const offers = useSelector(({ dataSlice }) => dataSlice.offers);
-  const isDataLoaded = useSelector(({ dataSlice }) => dataSlice.isDataLoaded);
+  const city = useSelector(getActiveCity);
+  const offers = useSelector(getOffers);
+  const isDataLoaded = useSelector(getIsDataLoaded);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadOffers());
-  }, [dispatch]);
-
-  const sortedOffers = offers.filter((item) => item.city.name === city);
+  const sortedOffers =
+    offers && offers.filter((item) => item.city.name === city);
 
   return (
     <div className="page page--gray page--main">
@@ -30,7 +26,7 @@ function MainPage() {
 
       <main
         className={
-          offers.length
+          offers && offers.length
             ? 'page__main page__main--index'
             : 'page__main page__main--index page__main--index-empty'
         }
@@ -43,7 +39,7 @@ function MainPage() {
         </div>
         <div className="cities">
           <LoadWrapper isLoad={isDataLoaded}>
-            {(sortedOffers.length && (
+            {(sortedOffers && sortedOffers.length && (
               <MainPageWrapper offers={sortedOffers} city={city} />
             )) || <EmptyPageWrapper />}
           </LoadWrapper>
