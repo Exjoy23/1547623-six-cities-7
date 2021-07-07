@@ -16,7 +16,7 @@ import {
   setFavoritesItem,
   setIsReviewError,
   setIsReviewSending,
-  setIsReviewSuccess,
+  setIsReviewSuccess
 } from './actions';
 
 describe('Actions', () => {

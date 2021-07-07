@@ -14,7 +14,7 @@ import {
   setIsReviewError,
   setIsReviewSending,
   setIsReviewSuccess,
-  setFavoritesItem,
+  setFavoritesItem
 } from './actions';
 import { NameSpace } from './root-reducer';
 
@@ -64,15 +64,15 @@ export const checkAuth = () => (dispatch, _getState, api) =>
 
 export const login =
   ({ login: email, password }) =>
-  (dispatch, _getState, api) =>
-    api
-      .post(APIRoute.LOGIN, { email, password })
-      .then(({ data }) => {
-        localStorage.setItem(TOKEN, data.token);
-        return dispatch(loadUserInfo(adaptUserInfo(data)));
-      })
-      .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-      .then(() => dispatch(redirectToRoute(AppRoute.MAIN)));
+    (dispatch, _getState, api) =>
+      api
+        .post(APIRoute.LOGIN, { email, password })
+        .then(({ data }) => {
+          localStorage.setItem(TOKEN, data.token);
+          return dispatch(loadUserInfo(adaptUserInfo(data)));
+        })
+        .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+        .then(() => dispatch(redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api
@@ -82,38 +82,38 @@ export const logout = () => (dispatch, _getState, api) =>
 
 export const sendReview =
   ({ comment, rating, id }) =>
-  (dispatch, _getState, api) => {
-    dispatch(setIsReviewSending(true));
-    dispatch(setIsReviewSuccess(false));
-    dispatch(setIsReviewError(false));
-    return api
-      .post(`${APIRoute.REVIEWS}/${id}`, {
-        comment,
-        rating,
-      })
-      .then(({ data }) => {
-        dispatch(setIsReviewSending(false));
-        dispatch(setIsReviewSuccess(true));
-        dispatch(setIsReviewError(false));
-        dispatch(loadReviews(data.map(adaptReview)));
-      })
-      .catch(() => {
-        dispatch(setIsReviewSending(false));
-        dispatch(setIsReviewSuccess(false));
-        dispatch(setIsReviewError(true));
-      });
-  };
+    (dispatch, _getState, api) => {
+      dispatch(setIsReviewSending(true));
+      dispatch(setIsReviewSuccess(false));
+      dispatch(setIsReviewError(false));
+      return api
+        .post(`${APIRoute.REVIEWS}/${id}`, {
+          comment,
+          rating,
+        })
+        .then(({ data }) => {
+          dispatch(setIsReviewSending(false));
+          dispatch(setIsReviewSuccess(true));
+          dispatch(setIsReviewError(false));
+          dispatch(loadReviews(data.map(adaptReview)));
+        })
+        .catch(() => {
+          dispatch(setIsReviewSending(false));
+          dispatch(setIsReviewSuccess(false));
+          dispatch(setIsReviewError(true));
+        });
+    };
 
 export const setFavorites =
   ({ id, status }) =>
-  (dispatch, getState, api) => {
-    const authStatus = getState()[NameSpace.USER].authorizationStatus;
+    (dispatch, getState, api) => {
+      const authStatus = getState()[NameSpace.USER].authorizationStatus;
 
-    if (authStatus !== AuthorizationStatus.AUTH) {
-      dispatch(redirectToRoute(AppRoute.SIGN_IN));
-    }
+      if (authStatus !== AuthorizationStatus.AUTH) {
+        dispatch(redirectToRoute(AppRoute.SIGN_IN));
+      }
 
-    api.post(`${APIRoute.FAVORITES}/${id}/${status}`).then(({ data }) => {
-      dispatch(setFavoritesItem(adaptOffer(data)));
-    });
-  };
+      api.post(`${APIRoute.FAVORITES}/${id}/${status}`).then(({ data }) => {
+        dispatch(setFavoritesItem(adaptOffer(data)));
+      });
+    };

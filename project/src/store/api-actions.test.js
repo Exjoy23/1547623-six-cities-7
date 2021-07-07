@@ -6,11 +6,11 @@ import {
   checkAuth,
   login,
   fetchOffer,
-  fetchOffersNearby,
+  // fetchOffersNearby,
   fetchFavorites,
-  logout,
-  setFavorites,
-  fetchReviews,
+  logout
+  // setFavorites,
+  // fetchReviews
 } from './api-actions';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 
