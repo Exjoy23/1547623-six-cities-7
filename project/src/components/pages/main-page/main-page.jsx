@@ -17,7 +17,8 @@ function MainPage() {
   const offers = useSelector(getOffers);
   const isDataLoaded = useSelector(getIsDataLoaded);
 
-  const sortedOffers = offers.filter((item) => item.city.name === city);
+  const sortedOffers =
+    offers && offers.filter((item) => item.city.name === city);
 
   return (
     <div className="page page--gray page--main">
@@ -25,7 +26,7 @@ function MainPage() {
 
       <main
         className={
-          offers.length
+          offers && offers.length
             ? 'page__main page__main--index'
             : 'page__main page__main--index page__main--index-empty'
         }
@@ -38,7 +39,7 @@ function MainPage() {
         </div>
         <div className="cities">
           <LoadWrapper isLoad={isDataLoaded}>
-            {(sortedOffers.length && (
+            {(sortedOffers && sortedOffers.length && (
               <MainPageWrapper offers={sortedOffers} city={city} />
             )) || <EmptyPageWrapper />}
           </LoadWrapper>

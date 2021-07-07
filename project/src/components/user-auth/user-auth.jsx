@@ -11,7 +11,10 @@ import { getUser } from '../../store/user-data/selectors';
 function UserAuth() {
   const dispatch = useDispatch();
 
-  const { avatarUrl, email } = useSelector(getUser);
+  const user = useSelector(getUser);
+
+  const avatarUrl = user && user.avatarUrl;
+  const email = user && user.email;
 
   const handleClick = () => {
     dispatch(logout());
@@ -24,7 +27,8 @@ function UserAuth() {
           className="header__nav-link header__nav-link--profile"
           to={AppRoute.FAVORITES}
           isActive={(match, { pathname }) =>
-            match && pathname === AppRoute.FAVORITES}
+            match && pathname === AppRoute.FAVORITES
+          }
           activeStyle={{
             pointerEvents: 'none',
             userSelect: 'none',

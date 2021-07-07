@@ -42,10 +42,12 @@ function RoomPage() {
   const reviews = useSelector(getReviews);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  const sortedReviews = reviews
-    .slice()
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 10);
+  const sortedReviews =
+    reviews &&
+    reviews
+      .slice()
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 10);
 
   const roomId = +params.id;
 
@@ -153,7 +155,9 @@ function RoomPage() {
                   <section className="property__reviews reviews">
                     <h2 className="reviews__title">
                       Reviews &middot;{' '}
-                      <span className="reviews__amount">{reviews.length}</span>
+                      <span className="reviews__amount">
+                        {reviews && reviews.length}
+                      </span>
                     </h2>
                     <ReviewList reviews={sortedReviews} />
                     {authorizationStatus === AuthorizationStatus.AUTH && (

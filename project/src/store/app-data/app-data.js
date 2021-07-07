@@ -6,7 +6,7 @@ import {
   loadOffersNearby,
   loadReviews,
   setDataLoad,
-  setFavoritesItem
+  setFavoritesItem,
 } from '../actions';
 
 const initialState = {
