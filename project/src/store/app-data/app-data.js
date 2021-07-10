@@ -45,18 +45,18 @@ const appData = createReducer(initialState, {
       offer.isFavorite = payload.isFavorite;
     }
 
-    if (favorites.some((item) => item.id === payload.id)) {
-      favorites.find((item) => item.id === payload.id).isFavorite =
-        payload.isFavorite;
-    }
+    const index = favorites.findIndex((item) => item.id === payload.id);
+    favorites.splice(index, 1);
 
     if (offersNearby.some((item) => item.id === payload.id)) {
       offersNearby.find((item) => item.id === payload.id).isFavorite =
         payload.isFavorite;
     }
 
-    offers.find((item) => item.id === payload.id).isFavorite =
-      payload.isFavorite;
+    if (offers.some((item) => item.id === payload.id)) {
+      offers.find((item) => item.id === payload.id).isFavorite =
+        payload.isFavorite;
+    }
   },
 });
 

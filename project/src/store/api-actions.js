@@ -29,7 +29,7 @@ export const fetchOffer = (id) => (dispatch, _getState, api) => {
 
 export const fetchOffers = () => (dispatch, _getState, api) => {
   dispatch(setDataLoad(false));
-  api
+  return api
     .get(APIRoute.OFFERS)
     .then(({ data }) => dispatch(loadOffers(data.map(adaptOffer))))
     .then(() => dispatch(setDataLoad(true)))
@@ -41,11 +41,10 @@ export const fetchOffersNearby = (id) => (dispatch, _getState, api) =>
     .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
     .then(({ data }) => dispatch(loadOffersNearby(data.map(adaptOffer))));
 
-export const fetchReviews = (id) => (dispatch, _getState, api) => {
+export const fetchReviews = (id) => (dispatch, _getState, api) =>
   api
     .get(`${APIRoute.REVIEWS}/${id}`)
     .then(({ data }) => dispatch(loadReviews(data.map(adaptReview))));
-};
 
 export const fetchFavorites = () => (dispatch, _getState, api) => {
   dispatch(setDataLoad(false));

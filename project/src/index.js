@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 
 import rootReducer from './store/root-reducer';
 import { requireAuthorization } from './store/actions';
-import { checkAuth, fetchOffers } from './store/api-actions';
+import { checkAuth } from './store/api-actions';
 
 import { redirect } from './store/middlewares/redirect';
 import { createAPI } from './services/api';
@@ -16,7 +16,7 @@ import App from './components/app/app';
 
 import { AuthorizationStatus } from './const';
 
-export const api = createAPI(() =>
+const api = createAPI(() =>
   store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
@@ -31,7 +31,6 @@ const store = configureStore({
 });
 
 store.dispatch(checkAuth());
-store.dispatch(fetchOffers());
 
 ReactDOM.render(
   <React.StrictMode>
