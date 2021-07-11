@@ -229,10 +229,6 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [
         {
-          id: 1,
-          isFavorite: true,
-        },
-        {
           id: 2,
           isFavorite: false,
         },

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import { useSelector } from 'react-redux';
 
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 

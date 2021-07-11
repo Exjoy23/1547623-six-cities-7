@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
-  comment: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
+  comment: PropTypes.string,
+  date: PropTypes.string,
+  id: PropTypes.number,
+  rating: PropTypes.number,
   user: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isPro: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-}).isRequired;
+    avatarUrl: PropTypes.string,
+    id: PropTypes.number,
+    isPro: PropTypes.bool,
+    name: PropTypes.string,
+  }),
+});

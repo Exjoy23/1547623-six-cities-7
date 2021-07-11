@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { changeActiveSort } from '../../store/actions';
 
-import useOutsideClick from '../../hooks/useOutsideClick';
+import useOutsideClick from '../../hooks/use-outside-click';
 
 function SortList({ sorts, activeSort, setIsActive }) {
   const dispatch = useDispatch();

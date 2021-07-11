@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { createAPI } from '../../services/api';
 import { AuthorizationStatus, AppRoute } from '../../const';
 
 import App from './app';
@@ -63,11 +64,13 @@ const review = {
   rating: 4,
 };
 
+let api = null;
+
 describe('Application Routing', () => {
   beforeAll(() => {
     history = createMemoryHistory();
-
-    const createFakeStore = configureStore([thunk]);
+    api = createAPI(() => {});
+    const createFakeStore = configureStore([thunk.withExtraArgument(api)]);
     store = createFakeStore({
       USER: { authorizationStatus: AuthorizationStatus.NO_AUTH },
       DATA: {
@@ -108,17 +111,17 @@ describe('Application Routing', () => {
     expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   });
 
-  //   it('should render "RoomPage" when user navigate to "/room"', () => {
-  //     history.push(AppRoute.ROOM);
-  //     render(fakeApp);
+  it('should render "RoomPage" when user navigate to "/room"', () => {
+    history.push(AppRoute.ROOM);
+    render(fakeApp);
 
-  //     expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-  //     expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
-  //     expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
-  //     expect(
-  //       screen.getByText(/Other places in the neighbourhood/i),
-  //     ).toBeInTheDocument();
-  //   });
+    expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
+    expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Other places in the neighbourhood/i),
+    ).toBeInTheDocument();
+  });
 
   it('should render "NotFoundPage" when user navigate to "/room/200"', () => {
     history.push(`${AppRoute.ROOM}/200`);
@@ -128,39 +131,39 @@ describe('Application Routing', () => {
     expect(screen.getByText(/Not found/i)).toBeInTheDocument();
   });
 
-  //   it('should render "FavoritesPage" when user navigate to "/room/200"', () => {
-  //     history = createMemoryHistory();
+  it('should render "FavoritesPage" when user navigate to "/room/200"', () => {
+    history = createMemoryHistory();
 
-  //     const createFakeStore = configureStore([thunk]);
-  //     store = createFakeStore({
-  //       USER: { authorizationStatus: AuthorizationStatus.AUTH },
-  //       DATA: {
-  //         isDataLoaded: true,
-  //         favorites: [],
-  //       },
-  //       UI: {
-  //         activeCity: 'Paris',
-  //         activeSort: 'Popular',
-  //         activeCard: null,
-  //       },
-  //     });
+    const createFakeStore = configureStore([thunk.withExtraArgument(api)]);
+    store = createFakeStore({
+      USER: { authorizationStatus: AuthorizationStatus.AUTH },
+      DATA: {
+        isDataLoaded: true,
+        favorites: [],
+      },
+      UI: {
+        activeCity: 'Paris',
+        activeSort: 'Popular',
+        activeCard: null,
+      },
+    });
 
-  //     fakeApp = (
-  //       <Provider store={store}>
-  //         <Router history={history}>
-  //           <App />
-  //         </Router>
-  //       </Provider>
-  //     );
+    fakeApp = (
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
 
-  //     history.push(AppRoute.FAVORITES);
-  //     render(fakeApp);
+    history.push(AppRoute.FAVORITES);
+    render(fakeApp);
 
-  //     expect(screen.getByText(/Nothing yet saved/i)).toBeInTheDocument();
-  //     expect(
-  //       screen.getByText(
-  //         /Save properties to narrow down search or plan your future trips/i,
-  //       ),
-  //     ).toBeInTheDocument();
-  //   });
+    expect(screen.getByText(/Nothing yet saved/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Save properties to narrow down search or plan your future trips/i,
+      ),
+    ).toBeInTheDocument();
+  });
 });

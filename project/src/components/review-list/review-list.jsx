@@ -16,7 +16,7 @@ function ReviewList({ reviews }) {
 }
 
 ReviewList.propTypes = {
-  reviews: PropTypes.arrayOf(reviewsProp).isRequired,
+  reviews: PropTypes.arrayOf(reviewsProp),
 };
 
 export default ReviewList;
