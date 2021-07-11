@@ -57,7 +57,7 @@ describe('Component: FavoritesItem', () => {
   beforeEach(() => {
     history = createMemoryHistory();
     const createFakeStore = configureStore({});
-    store = createFakeStore({});
+    store = createFakeStore({ USER: { isFavoritesError: false } });
   });
 
   it('should render correctly', () => {

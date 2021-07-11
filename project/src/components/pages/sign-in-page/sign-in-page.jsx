@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { AppRoute, Locations } from '../../../const';
@@ -8,8 +8,13 @@ import { login } from '../../../store/api-actions';
 import { changeActiveCity } from '../../../store/actions';
 
 import Header from '../../header/header';
+import Alert from '../../alert/alert';
+
+import { getIsAuthorizationError } from '../../../store/user-data/selectors';
 
 function SignInPage() {
+  const isAuthorizationError = useSelector(getIsAuthorizationError);
+
   const dispatch = useDispatch();
 
   const [password, setPassword] = useState('');
@@ -34,7 +39,7 @@ function SignInPage() {
   return (
     <div className="page page--gray page--login">
       <Header />
-
+      {isAuthorizationError && <Alert />}
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">

@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import Header from '../../header/header';
 import FavoritesList from '../../favorites-list/favorites-list';
 import EmptyFavoritesWrapper from '../../empty-favorites-wrapper/empty-favorites-wrapper';
+import LoadWrapper from '../../load-wrapper/load-wrapper';
+import Alert from '../../alert/alert';
 
 import { fetchFavorites } from '../../../store/api-actions';
-import LoadWrapper from '../../load-wrapper/load-wrapper';
 
 import {
   getFavorites,
+  getIsDataError,
   getIsDataLoaded
 } from '../../../store/app-data/selectors';
 
@@ -20,6 +22,7 @@ function FavoritesPage() {
   const dispatch = useDispatch();
   const favoritesOffers = useSelector(getFavorites);
   const isDataLoaded = useSelector(getIsDataLoaded);
+  const isDataError = useSelector(getIsDataError);
 
   const uniqueCities = new Set();
 
@@ -34,7 +37,7 @@ function FavoritesPage() {
   return (
     <div className="page">
       <Header />
-
+      {isDataError && <Alert />}
       <LoadWrapper isLoad={isDataLoaded}>
         <main
           className={

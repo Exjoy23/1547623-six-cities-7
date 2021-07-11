@@ -24,7 +24,7 @@ const reviews = [
     rating: 4,
     user: {
       avatarUrl: 'img/1.png',
-      id: 4,
+      id: 5,
       isPro: false,
       name: 'Max',
     },

@@ -16,6 +16,7 @@ import { changeActiveCard } from '../../../store/actions';
 
 import {
   getIsDataLoaded,
+  getIsDataError,
   getOffer,
   getOffersNearby,
   getReviews
@@ -32,6 +33,7 @@ import CardList from '../../card-list/card-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
 import FavoritesButton from '../../favorites-button/favorites-button';
+import Alert from '../../alert/alert';
 
 function RoomPage() {
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ function RoomPage() {
   const offer = useSelector(getOffer);
   const offersNearby = useSelector(getOffersNearby);
   const isDataLoaded = useSelector(getIsDataLoaded);
+  const isDataError = useSelector(getIsDataError);
   const reviews = useSelector(getReviews);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -80,7 +83,7 @@ function RoomPage() {
       {(Object.keys(offer).length && (
         <div className="page">
           <Header />
-
+          {isDataError && <Alert />}
           <main className="page__main page__main--property">
             <section className="property">
               <div className="property__gallery-container container">

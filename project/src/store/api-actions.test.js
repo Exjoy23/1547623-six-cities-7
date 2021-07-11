@@ -75,6 +75,15 @@ const review = {
   },
 };
 
+const userInfo = {
+  'avatar_url': 'img/1.png',
+  email: 'Oliver.conner@gmail.com',
+  id: 1,
+  'is_pro': false,
+  name: 'Oliver.conner',
+  token: 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=',
+};
+
 describe('Async operations', () => {
   beforeAll(() => {
     api = createAPI(() => {});
@@ -106,19 +115,23 @@ describe('Async operations', () => {
       isPro: false,
       name: 'Oliver.conner',
     };
-    const loginLoader = login(fakeUser);
+    const loginLoader = login({ email: fakeUser.email, password: 'qwerty123' });
 
-    apiMock.onPost(APIRoute.LOGIN).reply(200, [{ fake: true }]);
+    apiMock.onPost(APIRoute.LOGIN).reply(200, [userInfo]);
 
     return loginLoader(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(4);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.SET_IS_AUTHORIZATION_ERROR,
+        payload: false,
+      });
 
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
         type: ActionType.REQUIRE_AUTHORIZATION,
         payload: AuthorizationStatus.AUTH,
       });
 
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
         type: ActionType.REDIRECT_TO_ROUTE,
         payload: AppRoute.MAIN,
       });
@@ -148,15 +161,14 @@ describe('Async operations', () => {
     apiMock.onGet(`${APIRoute.OFFERS}/23`).reply(200, [offer]);
 
     return offerLoader(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledTimes(4);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.SET_DATA_LOAD,
         payload: false,
       });
-
       expect(dispatch).toHaveBeenNthCalledWith(2, {
-        type: ActionType.SET_DATA_LOAD,
-        payload: true,
+        type: ActionType.SET_DATA_ERROR,
+        payload: false,
       });
     });
   });
@@ -169,7 +181,7 @@ describe('Async operations', () => {
     apiMock.onGet(APIRoute.OFFERS).reply(200, [offer]);
 
     return offersLoader(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(4);
 
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.SET_DATA_LOAD,
@@ -177,11 +189,16 @@ describe('Async operations', () => {
       });
 
       expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: ActionType.SET_DATA_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
         type: ActionType.LOAD_OFFERS,
         payload: [adaptOffer(offer)],
       });
 
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
         type: ActionType.SET_DATA_LOAD,
         payload: true,
       });
@@ -226,18 +243,22 @@ describe('Async operations', () => {
     apiMock.onGet(APIRoute.FAVORITES).reply(200, [offer]);
 
     return favoritesLoader(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(4);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.SET_DATA_LOAD,
         payload: false,
       });
-
       expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: ActionType.SET_DATA_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
         type: ActionType.LOAD_FAVORITES,
         payload: [adaptOffer(offer)],
       });
 
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
         type: ActionType.SET_DATA_LOAD,
         payload: true,
       });

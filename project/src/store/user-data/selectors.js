@@ -8,3 +8,7 @@ export const getIsReviewSending = (state) =>
 export const getIsReviewSuccess = (state) =>
   state[NameSpace.USER].isReviewSuccess;
 export const getIsReviewError = (state) => state[NameSpace.USER].isReviewError;
+export const getIsFavoritesError = (state) =>
+  state[NameSpace.USER].isFavoritesError;
+export const getIsAuthorizationError = (state) =>
+  state[NameSpace.USER].isAuthorizationError;

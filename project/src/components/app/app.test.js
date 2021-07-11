@@ -58,11 +58,33 @@ const offer = {
   type: 'apartment',
 };
 
-const review = {
-  comment:
-    'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-  rating: 4,
-};
+const reviews = [
+  {
+    comment:
+      'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    date: '2019-05-08T14:13:56.569Z',
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: 'img/1.png',
+      id: 4,
+      isPro: false,
+      name: 'Max',
+    },
+  },
+  {
+    comment: 'A river by the unique lightness of Amsterdam.',
+    date: '2019-05-08T14:13:56.569Z',
+    id: 2,
+    rating: 4,
+    user: {
+      avatarUrl: 'img/1.png',
+      id: 5,
+      isPro: false,
+      name: 'Max',
+    },
+  },
+];
 
 let api = null;
 
@@ -76,7 +98,7 @@ describe('Application Routing', () => {
       DATA: {
         isDataLoaded: true,
         offer,
-        reviews: [review],
+        reviews: reviews,
         offersNearby: [offer],
       },
       UI: {
@@ -131,7 +153,7 @@ describe('Application Routing', () => {
     expect(screen.getByText(/Not found/i)).toBeInTheDocument();
   });
 
-  it('should render "FavoritesPage" when user navigate to "/room/200"', () => {
+  it('should render "FavoritesPage" when user navigate to "/favorites"', () => {
     history = createMemoryHistory();
 
     const createFakeStore = configureStore([thunk.withExtraArgument(api)]);

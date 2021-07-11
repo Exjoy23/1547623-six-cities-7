@@ -35,12 +35,7 @@ function FavoritesItem({ favoritesOffers, favoritesCity }) {
       </div>
       <div className="favorites__places">
         {offers.map((item) => (
-          <CardItem
-            key={item.id}
-            offer={item}
-            isFavoritesScreen
-            itemType={FAVORITES_TYPE}
-          />
+          <CardItem key={item.id} offer={item} itemType={FAVORITES_TYPE} />
         ))}
       </div>
     </li>

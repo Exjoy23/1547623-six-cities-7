@@ -57,7 +57,10 @@ describe('Component: MainPageWrapper', () => {
   beforeEach(() => {
     history = createMemoryHistory();
     const createFakeStore = configureStore({});
-    store = createFakeStore({ UI: { activeSort: 'Popular' } });
+    store = createFakeStore({
+      UI: { activeSort: 'Popular' },
+      USER: { isFavoritesError: false },
+    });
   });
 
   it('should render correctly', () => {

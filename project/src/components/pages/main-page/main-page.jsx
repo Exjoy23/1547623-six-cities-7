@@ -6,11 +6,16 @@ import LocationList from '../../location-list/location-list';
 import MainPageWrapper from '../../main-page-wrapper/main-page-wrapper';
 import EmptyPageWrapper from '../../empty-page-wrapper/empty-page-wrapper';
 import LoadWrapper from '../../load-wrapper/load-wrapper';
+import Alert from '../../alert/alert';
 
 import { fetchOffers } from '../../../store/api-actions';
 
 import { getActiveCity } from '../../../store/app-ui/selectors';
-import { getOffers, getIsDataLoaded } from '../../../store/app-data/selectors';
+import {
+  getOffers,
+  getIsDataLoaded,
+  getIsDataError
+} from '../../../store/app-data/selectors';
 
 import { Locations } from '../../../const';
 
@@ -18,6 +23,7 @@ function MainPage() {
   const city = useSelector(getActiveCity);
   const offers = useSelector(getOffers);
   const isDataLoaded = useSelector(getIsDataLoaded);
+  const isDataError = useSelector(getIsDataError);
 
   const dispatch = useDispatch();
 
@@ -31,7 +37,7 @@ function MainPage() {
   return (
     <div className="page page--gray page--main">
       <Header />
-
+      {isDataError && <Alert />}
       <main
         className={
           offers && offers.length

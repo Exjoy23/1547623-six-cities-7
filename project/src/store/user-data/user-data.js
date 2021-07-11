@@ -4,6 +4,8 @@ import {
   loadUserInfo,
   logout,
   requireAuthorization,
+  setIsAuthorizationError,
+  setIsFavoritesError,
   setIsReviewError,
   setIsReviewSending,
   setIsReviewSuccess
@@ -15,6 +17,8 @@ const initialState = {
   isReviewSending: false,
   isReviewSuccess: false,
   isReviewError: false,
+  isFavoritesError: false,
+  isAuthorizationError: false,
 };
 
 const userData = createReducer(initialState, {
@@ -36,6 +40,12 @@ const userData = createReducer(initialState, {
   },
   [setIsReviewError]: (state, { payload }) => {
     state.isReviewError = payload;
+  },
+  [setIsFavoritesError]: (state, { payload }) => {
+    state.isFavoritesError = payload;
+  },
+  [setIsAuthorizationError]: (state, { payload }) => {
+    state.isAuthorizationError = payload;
   },
 });
 

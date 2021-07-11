@@ -5,6 +5,7 @@ import {
   loadOffers,
   loadOffersNearby,
   loadReviews,
+  setDataError,
   setDataLoad,
   setFavoritesItem
 } from '../actions';
@@ -16,6 +17,7 @@ const initialState = {
   reviews: [],
   favorites: [],
   isDataLoaded: false,
+  isDataError: false,
 };
 
 const appData = createReducer(initialState, {
@@ -36,6 +38,9 @@ const appData = createReducer(initialState, {
   },
   [setDataLoad]: (state, { payload }) => {
     state.isDataLoaded = payload;
+  },
+  [setDataError]: (state, { payload }) => {
+    state.isDataError = payload;
   },
   [setFavoritesItem]: (
     { offer, offers, offersNearby, favorites },

@@ -10,6 +10,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -21,6 +22,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const loadOfferAction = {
       type: ActionType.LOAD_OFFER,
@@ -34,6 +36,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -45,6 +48,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const loadOffersAction = {
       type: ActionType.LOAD_OFFERS,
@@ -58,6 +62,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -69,6 +74,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const loadOffersNearbyAction = {
       type: ActionType.LOAD_OFFERS_NEARBY,
@@ -82,6 +88,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -93,6 +100,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const loadReviewsAction = {
       type: ActionType.LOAD_REVIEWS,
@@ -106,6 +114,7 @@ describe('Reducer: appData', () => {
       reviews: [{ review: 'review' }, { review1: 'review1' }],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -117,6 +126,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const loadFavoritesAction = {
       type: ActionType.LOAD_FAVORITES,
@@ -130,6 +140,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [{ offer: 'offer' }, { offer1: 'offer1' }],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 
@@ -141,6 +152,7 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: false,
+      isDataError: false,
     };
     const setDataLoadAction = {
       type: ActionType.SET_DATA_LOAD,
@@ -154,6 +166,33 @@ describe('Reducer: appData', () => {
       reviews: [],
       favorites: [],
       isDataLoaded: true,
+      isDataError: false,
+    });
+  });
+
+  it('should update is data error by is data error', () => {
+    const state = {
+      offer: {},
+      offers: [],
+      offersNearby: [],
+      reviews: [],
+      favorites: [],
+      isDataLoaded: false,
+      isDataError: false,
+    };
+    const setDataErrorAction = {
+      type: ActionType.SET_DATA_ERROR,
+      payload: true,
+    };
+
+    expect(appData(state, setDataErrorAction)).toEqual({
+      offer: {},
+      offers: [],
+      offersNearby: [],
+      reviews: [],
+      favorites: [],
+      isDataLoaded: false,
+      isDataError: true,
     });
   });
 
@@ -195,6 +234,7 @@ describe('Reducer: appData', () => {
         },
       ],
       isDataLoaded: false,
+      isDataError: false,
     };
     const setDataLoadAction = {
       type: ActionType.SET_FAVORITES_ITEM,
@@ -234,6 +274,7 @@ describe('Reducer: appData', () => {
         },
       ],
       isDataLoaded: false,
+      isDataError: false,
     });
   });
 });

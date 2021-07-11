@@ -9,6 +9,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -19,6 +21,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const requireAuthorizationAction = {
       type: ActionType.REQUIRE_AUTHORIZATION,
@@ -31,6 +35,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -41,6 +47,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const logoutAction = {
       type: ActionType.LOGOUT,
@@ -53,6 +61,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -63,6 +73,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const loadUserInfoAction = {
       type: ActionType.LOAD_USER_INFO,
@@ -75,6 +87,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -85,6 +99,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const setIsReviewSendingAction = {
       type: ActionType.SET_IS_REVIEW_SENDING,
@@ -97,6 +113,8 @@ describe('Reducer: userData', () => {
       isReviewSending: true,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -107,6 +125,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const setIsReviewSuccessAction = {
       type: ActionType.SET_IS_REVIEW_SUCCESS,
@@ -119,6 +139,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: true,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     });
   });
 
@@ -129,6 +151,8 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
     };
     const setIsReviewErrorAction = {
       type: ActionType.SET_IS_REVIEW_ERROR,
@@ -141,6 +165,60 @@ describe('Reducer: userData', () => {
       isReviewSending: false,
       isReviewSuccess: false,
       isReviewError: true,
+      isFavoritesError: false,
+      isAuthorizationError: false,
+    });
+  });
+
+  it('should update is favorites error status by set is favorites error', () => {
+    const state = {
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
+    };
+    const setIsFavoritesError = {
+      type: ActionType.SET_IS_FAVORITES_ERROR,
+      payload: true,
+    };
+
+    expect(userData(state, setIsFavoritesError)).toEqual({
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: true,
+      isAuthorizationError: false,
+    });
+  });
+
+  it('should update is authorization error status by set is authorization error', () => {
+    const state = {
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
+    };
+    const setIsAuthorizationError = {
+      type: ActionType.SET_IS_AUTHORIZATION_ERROR,
+      payload: true,
+    };
+
+    expect(userData(state, setIsAuthorizationError)).toEqual({
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: true,
     });
   });
 });
