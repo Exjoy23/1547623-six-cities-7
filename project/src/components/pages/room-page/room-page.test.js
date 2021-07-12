@@ -70,7 +70,7 @@ describe('Component: RoomPage', () => {
         reviews: [],
         isDataLoaded: true,
       },
-      USER: { authorizationStatus: 'AUTH' },
+      USER: { authorizationStatus: 'AUTH', isReviewSending: false },
     });
   });
 

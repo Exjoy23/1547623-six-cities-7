@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const DEFAULT_TEXT = 'Sending of message failed. Please try again later!';
+const DEFAULT_TEXT = 'Something went wrong. Please try again later!';
 
 function Alert({ text = DEFAULT_TEXT }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setVisible(false);
     }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

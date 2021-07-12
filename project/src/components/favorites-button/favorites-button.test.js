@@ -10,7 +10,7 @@ let store = null;
 describe('Component: FavoritesButton', () => {
   beforeEach(() => {
     const createFakeStore = configureStore({});
-    store = createFakeStore({});
+    store = createFakeStore({ USER: { isFavoritesError: false } });
   });
 
   it('should render correctly', () => {

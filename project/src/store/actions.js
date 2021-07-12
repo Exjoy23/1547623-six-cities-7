@@ -7,12 +7,15 @@ export const ActionType = {
   LOAD_REVIEWS: 'data/loadReviews',
   LOAD_FAVORITES: 'data/loadFavorites',
   SET_DATA_LOAD: 'data/setDataLoad',
+  SET_DATA_ERROR: 'data/setDataError',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOAD_USER_INFO: 'user/loadUserInfo',
   LOGOUT: 'user/logout',
   SET_IS_REVIEW_SENDING: 'user/setIsReviewSending',
   SET_IS_REVIEW_SUCCESS: 'user/setIsReviewSuccess',
   SET_IS_REVIEW_ERROR: 'user/setIsReviewError',
+  SET_IS_FAVORITES_ERROR: 'user/setIsFavoritesError',
+  SET_IS_AUTHORIZATION_ERROR: 'user/setIsAuthorizationError',
   SET_FAVORITES: 'ui/setFavorites',
   SET_FAVORITES_ITEM: 'ui/setFavoritesItem',
   CHANGE_ACTIVE_CITY: 'ui/changeActiveCity',
@@ -49,6 +52,13 @@ export const loadFavorites = createAction(
 
 export const setDataLoad = createAction(
   ActionType.SET_DATA_LOAD,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setDataError = createAction(
+  ActionType.SET_DATA_ERROR,
   (payload) => ({
     payload,
   }),
@@ -93,6 +103,20 @@ export const setIsReviewSuccess = createAction(
 
 export const setIsReviewError = createAction(
   ActionType.SET_IS_REVIEW_ERROR,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setIsFavoritesError = createAction(
+  ActionType.SET_IS_FAVORITES_ERROR,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setIsAuthorizationError = createAction(
+  ActionType.SET_IS_AUTHORIZATION_ERROR,
   (payload) => ({
     payload,
   }),

@@ -30,7 +30,7 @@ function SortForm({ sorts, activeSort }) {
         <SortList
           sorts={sorts}
           activeSort={activeSort}
-          setIsActive={setIsActive}
+          onSetIsActive={setIsActive}
         />
       )}
     </form>

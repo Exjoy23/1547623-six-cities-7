@@ -6,17 +6,17 @@ import { changeActiveSort } from '../../store/actions';
 
 import useOutsideClick from '../../hooks/use-outside-click';
 
-function SortList({ sorts, activeSort, setIsActive }) {
+function SortList({ sorts, activeSort, onSetIsActive }) {
   const dispatch = useDispatch();
 
   const ulRef = useRef(null);
 
-  useOutsideClick(ulRef, setIsActive);
+  useOutsideClick(ulRef, onSetIsActive);
 
   return (
     <ul
       ref={ulRef}
-      onMouseEnter={() => setIsActive(true)}
+      onMouseEnter={() => onSetIsActive(true)}
       className="places__options places__options--custom places__options--opened"
     >
       {sorts.map((item) => (
@@ -24,7 +24,7 @@ function SortList({ sorts, activeSort, setIsActive }) {
           key={item}
           onClick={() => {
             dispatch(changeActiveSort(item));
-            setIsActive(false);
+            onSetIsActive(false);
           }}
           className={
             activeSort === item
@@ -43,7 +43,7 @@ function SortList({ sorts, activeSort, setIsActive }) {
 SortList.propTypes = {
   sorts: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   activeSort: PropTypes.string.isRequired,
-  setIsActive: PropTypes.func.isRequired,
+  onSetIsActive: PropTypes.func.isRequired,
 };
 
 export default SortList;

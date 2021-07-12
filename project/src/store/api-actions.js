@@ -14,26 +14,37 @@ import {
   setIsReviewError,
   setIsReviewSending,
   setIsReviewSuccess,
-  setFavoritesItem
+  setFavoritesItem,
+  setIsFavoritesError,
+  setIsAuthorizationError,
+  setDataError
 } from './actions';
 import { NameSpace } from './root-reducer';
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => {
   dispatch(setDataLoad(false));
+  dispatch(setDataError(false));
   return api
     .get(`${APIRoute.OFFERS}/${id}`)
     .then(({ data }) => dispatch(loadOffer(adaptOffer(data))))
     .then(() => dispatch(setDataLoad(true)))
-    .catch(() => dispatch(setDataLoad(true)));
+    .catch(() => {
+      dispatch(setDataLoad(true));
+      dispatch(setDataError(true));
+    });
 };
 
 export const fetchOffers = () => (dispatch, _getState, api) => {
   dispatch(setDataLoad(false));
+  dispatch(setDataError(false));
   return api
     .get(APIRoute.OFFERS)
     .then(({ data }) => dispatch(loadOffers(data.map(adaptOffer))))
     .then(() => dispatch(setDataLoad(true)))
-    .catch(() => dispatch(setDataLoad(true)));
+    .catch(() => {
+      dispatch(setDataLoad(true));
+      dispatch(setDataError(true));
+    });
 };
 
 export const fetchOffersNearby = (id) => (dispatch, _getState, api) =>
@@ -48,11 +59,15 @@ export const fetchReviews = (id) => (dispatch, _getState, api) =>
 
 export const fetchFavorites = () => (dispatch, _getState, api) => {
   dispatch(setDataLoad(false));
+  dispatch(setDataError(false));
   return api
     .get(APIRoute.FAVORITES)
     .then(({ data }) => dispatch(loadFavorites(data.map(adaptOffer))))
     .then(() => dispatch(setDataLoad(true)))
-    .catch(() => dispatch(setDataLoad(true)));
+    .catch(() => {
+      dispatch(setDataLoad(true));
+      dispatch(setDataError(true));
+    });
 };
 
 export const checkAuth = () => (dispatch, _getState, api) =>
@@ -63,15 +78,18 @@ export const checkAuth = () => (dispatch, _getState, api) =>
 
 export const login =
   ({ login: email, password }) =>
-    (dispatch, _getState, api) =>
-      api
+    (dispatch, _getState, api) => {
+      dispatch(setIsAuthorizationError(false));
+      return api
         .post(APIRoute.LOGIN, { email, password })
         .then(({ data }) => {
           localStorage.setItem(TOKEN, data.token);
           return dispatch(loadUserInfo(adaptUserInfo(data)));
         })
         .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-        .then(() => dispatch(redirectToRoute(AppRoute.MAIN)));
+        .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
+        .catch(() => dispatch(setIsAuthorizationError(true)));
+    };
 
 export const logout = () => (dispatch, _getState, api) =>
   api
@@ -110,9 +128,13 @@ export const setFavorites =
 
       if (authStatus !== AuthorizationStatus.AUTH) {
         dispatch(redirectToRoute(AppRoute.SIGN_IN));
+      } else {
+        dispatch(setIsFavoritesError(false));
+        api
+          .post(`${APIRoute.FAVORITES}/${id}/${status}`)
+          .then(({ data }) => {
+            dispatch(setFavoritesItem(adaptOffer(data)));
+          })
+          .catch(() => dispatch(setIsFavoritesError(true)));
       }
-
-      api.post(`${APIRoute.FAVORITES}/${id}/${status}`).then(({ data }) => {
-        dispatch(setFavoritesItem(adaptOffer(data)));
-      });
     };
