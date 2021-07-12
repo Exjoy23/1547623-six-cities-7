@@ -6,7 +6,7 @@ import RatingItem from '../rating-item/rating-item';
 
 import { getIsReviewSending } from '../../store/user-data/selectors';
 
-const RATINGS = [5, 4, 3, 2, 1];
+import { RATINGS } from '../../const';
 
 function RatingList({ handleChange, checked }) {
   const isReviewSending = useSelector(getIsReviewSending);

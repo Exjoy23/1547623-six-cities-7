@@ -1,14 +1,16 @@
 import React from 'react';
 
+import { DateConfig } from '../../const';
+
 import { getRatingInPercent } from '../../utils';
 
 import reviewsProp from '../app/reviews.prop';
 
 function ReviewItem({ review: { comment, date, rating, user } }) {
   const reviewRating = getRatingInPercent(rating);
-  const reviewDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
+  const reviewDate = new Date(date).toLocaleDateString(DateConfig.LOCALES, {
+    year: DateConfig.YEAR,
+    month: DateConfig.MONTH,
   });
 
   return (

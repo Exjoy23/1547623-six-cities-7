@@ -19,7 +19,7 @@ describe('Component: SortList', () => {
             'Top rated first',
           ]}
           activeSort={'Popular'}
-          setIsActive={() => {}}
+          onSetIsActive={() => {}}
         />
       </Provider>,
     );

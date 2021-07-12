@@ -12,3 +12,4 @@ export const getIsFavoritesError = (state) =>
   state[NameSpace.USER].isFavoritesError;
 export const getIsAuthorizationError = (state) =>
   state[NameSpace.USER].isAuthorizationError;
+export const getIsOffline = (state) => state[NameSpace.USER].isOffline;

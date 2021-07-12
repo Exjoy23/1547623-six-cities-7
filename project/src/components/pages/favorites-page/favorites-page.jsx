@@ -15,14 +15,16 @@ import {
   getIsDataError,
   getIsDataLoaded
 } from '../../../store/app-data/selectors';
+import { getIsOffline } from '../../../store/user-data/selectors';
 
-import { AppRoute } from '../../../const';
+import { AlertText, AppRoute } from '../../../const';
 
 function FavoritesPage() {
   const dispatch = useDispatch();
   const favoritesOffers = useSelector(getFavorites);
   const isDataLoaded = useSelector(getIsDataLoaded);
   const isDataError = useSelector(getIsDataError);
+  const isOffline = useSelector(getIsOffline);
 
   const uniqueCities = new Set();
 
@@ -37,7 +39,8 @@ function FavoritesPage() {
   return (
     <div className="page">
       <Header />
-      {isDataError && <Alert />}
+      {isOffline && <Alert text={AlertText.OFFLINE} />}
+      {isDataError && <Alert text={AlertText.LOADING} />}
       <LoadWrapper isLoad={isDataLoaded}>
         <main
           className={

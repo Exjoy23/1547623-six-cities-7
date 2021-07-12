@@ -6,6 +6,7 @@ import {
   requireAuthorization,
   setIsAuthorizationError,
   setIsFavoritesError,
+  setIsOffline,
   setIsReviewError,
   setIsReviewSending,
   setIsReviewSuccess
@@ -19,6 +20,7 @@ const initialState = {
   isReviewError: false,
   isFavoritesError: false,
   isAuthorizationError: false,
+  isOffline: false,
 };
 
 const userData = createReducer(initialState, {
@@ -46,6 +48,9 @@ const userData = createReducer(initialState, {
   },
   [setIsAuthorizationError]: (state, { payload }) => {
     state.isAuthorizationError = payload;
+  },
+  [setIsOffline]: (state, { payload }) => {
+    state.isOffline = payload;
   },
 });
 

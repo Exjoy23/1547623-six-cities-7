@@ -11,6 +11,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -23,6 +24,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const requireAuthorizationAction = {
       type: ActionType.REQUIRE_AUTHORIZATION,
@@ -37,6 +39,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -49,6 +52,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const logoutAction = {
       type: ActionType.LOGOUT,
@@ -63,6 +67,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -75,6 +80,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const loadUserInfoAction = {
       type: ActionType.LOAD_USER_INFO,
@@ -89,6 +95,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -101,6 +108,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const setIsReviewSendingAction = {
       type: ActionType.SET_IS_REVIEW_SENDING,
@@ -115,6 +123,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -127,6 +136,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const setIsReviewSuccessAction = {
       type: ActionType.SET_IS_REVIEW_SUCCESS,
@@ -141,6 +151,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -153,6 +164,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const setIsReviewErrorAction = {
       type: ActionType.SET_IS_REVIEW_ERROR,
@@ -167,6 +179,7 @@ describe('Reducer: userData', () => {
       isReviewError: true,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -179,6 +192,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const setIsFavoritesError = {
       type: ActionType.SET_IS_FAVORITES_ERROR,
@@ -193,6 +207,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: true,
       isAuthorizationError: false,
+      isOffline: false,
     });
   });
 
@@ -205,6 +220,7 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: false,
+      isOffline: false,
     };
     const setIsAuthorizationError = {
       type: ActionType.SET_IS_AUTHORIZATION_ERROR,
@@ -219,6 +235,35 @@ describe('Reducer: userData', () => {
       isReviewError: false,
       isFavoritesError: false,
       isAuthorizationError: true,
+      isOffline: false,
+    });
+  });
+
+  it('should update is offline status by set is offline', () => {
+    const state = {
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
+      isOffline: false,
+    };
+    const setIsOffline = {
+      type: ActionType.SET_IS_OFFLINE,
+      payload: true,
+    };
+
+    expect(userData(state, setIsOffline)).toEqual({
+      authorizationStatus: 'AUTH',
+      user: { user: 'info' },
+      isReviewSending: false,
+      isReviewSuccess: false,
+      isReviewError: false,
+      isFavoritesError: false,
+      isAuthorizationError: false,
+      isOffline: true,
     });
   });
 });

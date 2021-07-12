@@ -17,13 +17,15 @@ import {
   getIsDataError
 } from '../../../store/app-data/selectors';
 
-import { Locations } from '../../../const';
+import { AlertText, Locations } from '../../../const';
+import { getIsOffline } from '../../../store/user-data/selectors';
 
 function MainPage() {
   const city = useSelector(getActiveCity);
   const offers = useSelector(getOffers);
   const isDataLoaded = useSelector(getIsDataLoaded);
   const isDataError = useSelector(getIsDataError);
+  const isOffline = useSelector(getIsOffline);
 
   const dispatch = useDispatch();
 
@@ -37,7 +39,8 @@ function MainPage() {
   return (
     <div className="page page--gray page--main">
       <Header />
-      {isDataError && <Alert />}
+      {isOffline && <Alert text={AlertText.OFFLINE} />}
+      {isDataError && <Alert text={AlertText.LOADING} />}
       <main
         className={
           offers && offers.length
@@ -63,4 +66,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default React.memo(MainPage);

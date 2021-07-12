@@ -14,6 +14,7 @@ import {
   requireAuthorization,
   setDataLoad,
   setFavoritesItem,
+  setIsOffline,
   setIsReviewError,
   setIsReviewSending,
   setIsReviewSuccess
@@ -170,6 +171,15 @@ describe('Actions', () => {
     };
 
     expect(setIsReviewError(false)).toEqual(expectedAction);
+  });
+
+  it('action creator for set is offline returns correct action', () => {
+    const expectedAction = {
+      type: ActionType.SET_IS_OFFLINE,
+      payload: false,
+    };
+
+    expect(setIsOffline(false)).toEqual(expectedAction);
   });
 
   it('action creator for change active city returns correct action', () => {

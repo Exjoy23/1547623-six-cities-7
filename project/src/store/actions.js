@@ -16,6 +16,7 @@ export const ActionType = {
   SET_IS_REVIEW_ERROR: 'user/setIsReviewError',
   SET_IS_FAVORITES_ERROR: 'user/setIsFavoritesError',
   SET_IS_AUTHORIZATION_ERROR: 'user/setIsAuthorizationError',
+  SET_IS_OFFLINE: 'user/setIsOffline',
   SET_FAVORITES: 'ui/setFavorites',
   SET_FAVORITES_ITEM: 'ui/setFavoritesItem',
   CHANGE_ACTIVE_CITY: 'ui/changeActiveCity',
@@ -117,6 +118,13 @@ export const setIsFavoritesError = createAction(
 
 export const setIsAuthorizationError = createAction(
   ActionType.SET_IS_AUTHORIZATION_ERROR,
+  (payload) => ({
+    payload,
+  }),
+);
+
+export const setIsOffline = createAction(
+  ActionType.SET_IS_OFFLINE,
   (payload) => ({
     payload,
   }),

@@ -109,6 +109,33 @@ export const APIRoute = {
   FAVORITES: '/favorite',
 };
 
+export const AlertText = {
+  DEFAULT: 'Something went wrong. Please try again later!',
+  OFFLINE: 'Connection lost',
+  LOADING: 'Loading failure. Please try again later.',
+};
+
 export const TOKEN = 'token';
 export const IS_FAVORITES = 1;
 export const IS_NOT_FAVORITES = 0;
+
+export const DEFAULT_TIMER = 5000;
+
+export const RATINGS = [5, 4, 3, 2, 1];
+
+export const DateConfig = {
+  LOCALES: 'en-US',
+  YEAR: 'numeric',
+  MONTH: 'short',
+};
+
+export const MapConfig = {
+  TILE_LAYER:
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  ATTRIBUTION:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+};
+
+export const REMOVE_FAVORITES_COUNT = 1;
+
+export const OFFLINE_TITLE = ' [offline]';

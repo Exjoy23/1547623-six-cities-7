@@ -6,7 +6,8 @@ import { getRatingInPercent } from '../../../utils';
 import {
   NEARBY_TYPE,
   AuthorizationStatus,
-  FAVORITES_TYPE
+  FAVORITES_TYPE,
+  AlertText
 } from '../../../const';
 
 import { fetchOffer } from '../../../store/api-actions';
@@ -21,7 +22,10 @@ import {
   getOffersNearby,
   getReviews
 } from '../../../store/app-data/selectors';
-import { getAuthorizationStatus } from '../../../store/user-data/selectors';
+import {
+  getAuthorizationStatus,
+  getIsOffline
+} from '../../../store/user-data/selectors';
 
 import Header from '../../header/header';
 import Map from '../../map/map';
@@ -44,6 +48,7 @@ function RoomPage() {
   const isDataError = useSelector(getIsDataError);
   const reviews = useSelector(getReviews);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isOffline = useSelector(getIsOffline);
 
   const sortedReviews =
     reviews &&
@@ -83,6 +88,7 @@ function RoomPage() {
       {(Object.keys(offer).length && (
         <div className="page">
           <Header />
+          {isOffline && <Alert text={AlertText.OFFLINE} />}
           {isDataError && <Alert />}
           <main className="page__main page__main--property">
             <section className="property">

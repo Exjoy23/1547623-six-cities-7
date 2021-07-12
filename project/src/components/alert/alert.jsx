@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const DEFAULT_TEXT = 'Something went wrong. Please try again later!';
+import { AlertText, DEFAULT_TIMER } from '../../const';
 
-function Alert({ text = DEFAULT_TEXT }) {
+function Alert({ text = AlertText.DEFAULT }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 5000);
+    }, DEFAULT_TIMER);
 
     return () => {
       clearTimeout(timer);

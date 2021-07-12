@@ -1,4 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
+
+import { REMOVE_FAVORITES_COUNT } from '../../const';
+
 import {
   loadFavorites,
   loadOffer,
@@ -51,7 +54,7 @@ const appData = createReducer(initialState, {
     }
 
     const index = favorites.findIndex((item) => item.id === payload.id);
-    favorites.splice(index, 1);
+    favorites.splice(index, REMOVE_FAVORITES_COUNT);
 
     if (offersNearby.some((item) => item.id === payload.id)) {
       offersNearby.find((item) => item.id === payload.id).isFavorite =

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { AppRoute, Locations } from '../../../const';
+import { AlertText, AppRoute, Locations } from '../../../const';
 
 import { login } from '../../../store/api-actions';
 import { changeActiveCity } from '../../../store/actions';
@@ -10,10 +10,14 @@ import { changeActiveCity } from '../../../store/actions';
 import Header from '../../header/header';
 import Alert from '../../alert/alert';
 
-import { getIsAuthorizationError } from '../../../store/user-data/selectors';
+import {
+  getIsAuthorizationError,
+  getIsOffline
+} from '../../../store/user-data/selectors';
 
 function SignInPage() {
   const isAuthorizationError = useSelector(getIsAuthorizationError);
+  const isOffline = useSelector(getIsOffline);
 
   const dispatch = useDispatch();
 
@@ -39,6 +43,7 @@ function SignInPage() {
   return (
     <div className="page page--gray page--login">
       <Header />
+      {isOffline && <Alert text={AlertText.OFFLINE} />}
       {isAuthorizationError && <Alert />}
       <main className="page__main page__main--login">
         <div className="page__login-container container">
